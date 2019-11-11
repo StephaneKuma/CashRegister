@@ -51,7 +51,7 @@ public class CategoryDAO implements DAO<Category> {
     }
     
     public Category getByType(String type) {
-        return controller.finCategoryByType(type);
+        return controller.findCategoryByType(type);
     }
 
     @Override

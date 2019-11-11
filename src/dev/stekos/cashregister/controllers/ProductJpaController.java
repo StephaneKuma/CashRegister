@@ -121,39 +121,6 @@ public class ProductJpaController implements Serializable {
             em.close();
         }
     }
-    
-    /**
-     * retrieve all products the same category id
-     * @param id
-     * @return 
-     */
-    public List<Product> findProductByCategoryId(int id) {
-        EntityManager em = getEntityManager();
-        List<Product> products = null;
-        try {
-            String queryString = "SELECT p FROM Product p WHERE p.categoryId = :categoryId";
-            Query query = em.createQuery(queryString);
-            query.setParameter("categoryId", id);
-            products = query.getResultList();
-        } finally {
-            em.close();
-        }
-        return products;
-    }
-    
-    public Product findProuctByName(String name) {
-        EntityManager em = getEntityManager();
-        Product product = null;
-        try {
-            String queryString = "SELECT p FROM Product p WHERE p.name = :name";
-            Query query = em.createQuery(queryString);
-            query.setParameter("name", name);
-            product = (Product) query.getSingleResult();
-        } finally {
-            em.close();
-        }
-        return product;
-    }
 
     public int getProductCount() {
         EntityManager em = getEntityManager();
@@ -166,6 +133,34 @@ public class ProductJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+
+    public List<Product> findProductByCategoryId(int subCategoryId) {
+        EntityManager em = getEntityManager();
+        List<Product> products = null;
+        try {
+            String queryString = "SELECT p FROM Product p WHERE p.subCategoryId = :subCategoryId";
+            Query query = em.createQuery(queryString);
+            query.setParameter("subCategoryId", subCategoryId);
+            products = query.getResultList();
+        } finally {
+            em.close();
+        }
+        return products;
+    }
+
+    public Product findProuctByName(String name) {
+        EntityManager em = getEntityManager();
+        Product product = null;
+        try {
+            String queryString  = "SELECT p FROM Product p WHERE p.name = :name";
+            Query query = em.createQuery(queryString);
+            query.setParameter("name", name);
+            product = (Product) query.getSingleResult();
+        } finally {
+            em.close();
+        }
+        return product;
     }
     
 }

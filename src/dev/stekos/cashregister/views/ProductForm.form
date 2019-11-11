@@ -23,17 +23,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="addProdPane" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="actionsPane" alignment="0" max="32767" attributes="0"/>
-                          <Component id="searchPane" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Component id="productsPane2" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="actionsPane" max="32767" attributes="0"/>
+                  <Component id="addProdPane" max="32767" attributes="0"/>
+                  <Component id="searchPane" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="productsPane2" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -42,17 +38,17 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="productsPane2" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="searchPane" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="addProdPane" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="actionsPane" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="searchPane" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="addProdPane" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="productsPane2" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -91,7 +87,7 @@
                           </Group>
                           <EmptySpace min="77" pref="77" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="categoriesCb" max="32767" attributes="0"/>
+                              <Component id="subCategoriesCb" max="32767" attributes="0"/>
                               <Component id="idTxt" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -103,14 +99,16 @@
                               <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel8" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="priceTxt" alignment="1" max="32767" attributes="0"/>
-                              <Component id="quantityTxt" alignment="0" max="32767" attributes="0"/>
                               <Component id="descTxt" alignment="1" max="32767" attributes="0"/>
-                              <Component id="addDc" alignment="0" pref="221" max="32767" attributes="0"/>
+                              <Component id="quantityTxt" alignment="1" max="32767" attributes="0"/>
+                              <Component id="priceTxt" alignment="1" max="32767" attributes="0"/>
                               <Component id="nameTxt" alignment="1" max="32767" attributes="0"/>
+                              <Component id="suppliersCb" max="32767" attributes="0"/>
+                              <Component id="addDc" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -129,7 +127,12 @@
                   <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="categoriesCb" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="subCategoriesCb" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="suppliersCb" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -169,7 +172,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cat&#xe9;gorie"/>
+            <Property name="text" type="java.lang.String" value="Sous Cat."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
@@ -212,7 +215,7 @@
             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="nameTxtFocusGained"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="categoriesCb">
+        <Component class="javax.swing.JComboBox" name="subCategoriesCb">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -224,7 +227,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="categoriesCbFocusGained"/>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="subCategoriesCbFocusGained"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -241,6 +244,26 @@
           </Properties>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="addDc">
+        </Component>
+        <Component class="javax.swing.JComboBox" name="suppliersCb">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Fournisseur"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -268,7 +291,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="addBtn" alignment="0" max="32767" attributes="0"/>
                       <Component id="cancelBtn" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
@@ -377,10 +400,13 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="searchLyP" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="searchLyP" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           <Component id="categorieBtn" min="-2" pref="87" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="nameBtn" min="-2" pref="87" max="-2" attributes="0"/>
@@ -408,7 +434,7 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="categorieBtn">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cat&#xe9;gorie"/>
+            <Property name="text" type="java.lang.String" value="Sous cat."/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="categorieBtnActionPerformed"/>
@@ -438,7 +464,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="catSearchCb" pref="116" max="32767" attributes="0"/>
+                          <Component id="catSearchCb" pref="233" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="catSearchBtn" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -502,7 +528,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="nameSearchTxt" pref="116" max="32767" attributes="0"/>
+                          <Component id="nameSearchTxt" pref="233" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="nameSearchBtn" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -561,7 +587,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane3" max="32767" attributes="0"/>
+                  <Component id="jScrollPane3" pref="674" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -570,7 +596,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane3" pref="194" max="32767" attributes="0"/>
+                  <Component id="jScrollPane3" pref="490" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>

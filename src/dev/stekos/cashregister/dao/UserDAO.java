@@ -5,7 +5,6 @@
  */
 package dev.stekos.cashregister.dao;
 
-import dev.stekos.cashregister.controllers.CategoryJpaController;
 import dev.stekos.cashregister.controllers.UserJpaController;
 import dev.stekos.cashregister.controllers.exceptions.NonexistentEntityException;
 import dev.stekos.cashregister.models.User;

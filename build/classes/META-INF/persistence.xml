@@ -6,6 +6,9 @@
     <class>dev.stekos.cashregister.models.Product</class>
     <class>dev.stekos.cashregister.models.Category</class>
     <class>dev.stekos.cashregister.models.Invoice</class>
+    <class>dev.stekos.cashregister.models.Supplier</class>
+    <class>dev.stekos.cashregister.models.SubCategory</class>
+    <class>dev.stekos.cashregister.models.Categoriy</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cashregister?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

@@ -121,8 +121,8 @@ public class CategoryJpaController implements Serializable {
             em.close();
         }
     }
-    
-    public Category finCategoryByType(String type) {
+
+    public Category findCategoryByType(String type) {
         EntityManager em = getEntityManager();
         Category category = null;
         try {
@@ -133,10 +133,9 @@ public class CategoryJpaController implements Serializable {
         } finally {
             em.close();
         }
-        
         return category;
     }
-
+    
     public int getCategoryCount() {
         EntityManager em = getEntityManager();
         try {

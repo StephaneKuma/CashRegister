@@ -91,11 +91,11 @@ public class MainForm extends javax.swing.JFrame {
         setTitle("Cash Register");
         setAlwaysOnTop(true);
         setMinimumSize(new java.awt.Dimension(867, 589));
-        setPreferredSize(new java.awt.Dimension(867, 589));
+        setPreferredSize(new java.awt.Dimension(1295, 648));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(23, 35, 51));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel5.setBackground(new java.awt.Color(71, 120, 197));
@@ -268,7 +268,7 @@ public class MainForm extends javax.swing.JFrame {
 
         jPanel1.add(productPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 160, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 590));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 620));
 
         headerPane.setBackground(new java.awt.Color(71, 120, 197));
         headerPane.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -293,7 +293,7 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(headerPaneLayout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addComponent(mainLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(552, Short.MAX_VALUE))
+                .addContainerGap(972, Short.MAX_VALUE))
         );
         headerPaneLayout.setVerticalGroup(
             headerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,13 +303,15 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        getContentPane().add(headerPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 710, 60));
+        getContentPane().add(headerPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 1130, 60));
 
         mainPane.setBackground(new java.awt.Color(204, 204, 255));
         mainPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        mainPane.setPreferredSize(null);
         mainPane.setLayout(new java.awt.CardLayout());
 
         dashboardPane.setBackground(new java.awt.Color(204, 204, 255));
+        dashboardPane.setPreferredSize(new java.awt.Dimension(1068, 526));
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -384,7 +386,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(172, Short.MAX_VALUE))
+                .addContainerGap(592, Short.MAX_VALUE))
         );
         dashboardPaneLayout.setVerticalGroup(
             dashboardPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -393,12 +395,12 @@ public class MainForm extends javax.swing.JFrame {
                 .addGroup(dashboardPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(237, Short.MAX_VALUE))
+                .addContainerGap(267, Short.MAX_VALUE))
         );
 
         mainPane.add(dashboardPane, "card2");
 
-        getContentPane().add(mainPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 710, 530));
+        getContentPane().add(mainPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 1130, 560));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

@@ -31,7 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
     @NamedQuery(name = "Product.findById", query = "SELECT p FROM Product p WHERE p.id = :id"),
-    @NamedQuery(name = "Product.findByCategoryId", query = "SELECT p FROM Product p WHERE p.categoryId = :categoryId"),
+    @NamedQuery(name = "Product.findBySubCategoryId", query = "SELECT p FROM Product p WHERE p.subCategoryId = :subCategoryId"),
+    @NamedQuery(name = "Product.findBySupplierId", query = "SELECT p FROM Product p WHERE p.supplierId = :supplierId"),
     @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name"),
     @NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.price = :price"),
     @NamedQuery(name = "Product.findByQuantity", query = "SELECT p FROM Product p WHERE p.quantity = :quantity"),
@@ -45,9 +46,11 @@ public class Product implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Column(name = "sub_category_id")
+    private Integer subCategoryId;
     @Basic(optional = false)
-    @Column(name = "category_id")
-    private int categoryId;
+    @Column(name = "supplier_id")
+    private int supplierId;
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
@@ -77,9 +80,9 @@ public class Product implements Serializable {
         this.id = id;
     }
 
-    public Product(Integer id, int categoryId, String name, double price, double quantity, String description, Date createdAt, Date updatedAt) {
+    public Product(Integer id, int supplierId, String name, double price, double quantity, String description, Date createdAt, Date updatedAt) {
         this.id = id;
-        this.categoryId = categoryId;
+        this.supplierId = supplierId;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
@@ -96,12 +99,20 @@ public class Product implements Serializable {
         this.id = id;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public Integer getSubCategoryId() {
+        return subCategoryId;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setSubCategoryId(Integer subCategoryId) {
+        this.subCategoryId = subCategoryId;
+    }
+
+    public int getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
     }
 
     public String getName() {
