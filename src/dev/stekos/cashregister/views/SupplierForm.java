@@ -5,7 +5,24 @@
  */
 package dev.stekos.cashregister.views;
 
+import dev.stekos.cashregister.controllers.exceptions.NonexistentEntityException;
 import dev.stekos.cashregister.dao.SupplierDAO;
+import dev.stekos.cashregister.models.Supplier;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,9 +36,72 @@ public class SupplierForm extends javax.swing.JPanel {
      */
     public SupplierForm() {
         initComponents();
+        idTxt.setEditable(false);
+        addBtn.setEnabled(false);
+        editBtn.setEnabled(false);
+        cancelBtn.setEnabled(false);
+        deleteBtn.setEnabled(false);
+        suppliersTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
+        suppliersTable.getTableHeader().setOpaque(false);
+        suppliersTable.getTableHeader().setBackground(new Color(32, 136, 203));
+        suppliersTable.getTableHeader().setForeground(new Color(255, 255, 255));
+        suppliersTable.setRowHeight(25);
+        suppliersTable.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            if(suppliersTable.getSelectedRow() != -1) {
+                try {
+                    addBtn.setEnabled(false);
+                    editBtn.setEnabled(true);
+                    cancelBtn.setEnabled(true);
+                    deleteBtn.setEnabled(true);
+                    int selectedRow = suppliersTable.getSelectedRow();
+                    idTxt.setText((suppliersTable.getValueAt(selectedRow, 0).toString()));
+                    nameTxt.setText((suppliersTable.getValueAt(selectedRow, 1).toString()));
+                    phoneTxt.setText(suppliersTable.getValueAt(selectedRow, 2).toString());
+                    addressTxt.setText(suppliersTable.getValueAt(selectedRow, 3).toString());
+                    Date date = new SimpleDateFormat("dd-MM-yyyy").parse((suppliersTable.getValueAt(selectedRow, 4)).toString());
+                    addDc.setDate(date);
+                } catch (ParseException ex) {
+                    Logger.getLogger(SupplierForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        fillSuppliersTable();
     }
-    private void fillsuppliersTable() {
-        
+    
+    @Override
+    protected void paintComponent(Graphics graphics) {
+        Graphics2D graphics2D = (Graphics2D) graphics;
+        int width = getWidth();
+        int height = getHeight();
+        Color color1 = new Color(71, 120, 197);
+        Color color2 = new Color(23, 35, 51);
+        GradientPaint gradientPaint = new GradientPaint(0, 0, color1, 180, height, color2);
+        graphics2D.setPaint(gradientPaint);
+        graphics2D.fillRect(0, 0, width, height);
+    }
+    
+    private void fillSuppliersTable() {
+        List<Supplier> suppliers = supplierDAO.getAll();
+        int rows = suppliers.size();
+        Object[][] table = new Object[rows][5];
+        for (int i = 0; i < rows; i++) {
+            table[i][0] = suppliers.get(i).getId();
+            table[i][1] = suppliers.get(i).getName();
+            table[i][2] = suppliers.get(i).getPhone();
+            table[i][3] = suppliers.get(i).getAddress();
+            DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+            table[i][4] = format.format(suppliers.get(i).getUpdatedAt());
+        }
+        DefaultTableModel model = new DefaultTableModel(table, new String[] {
+            "Id", "Nom", "Téléphone", "Adresse", "Date Ajout"
+        });
+        suppliersTable.setModel(model);
+    }
+    
+    private void enableAddButton() {
+        if("".equals(idTxt.getText())) {
+            addBtn.setEnabled(true);
+        }
     }
 
     /**
@@ -40,23 +120,23 @@ public class SupplierForm extends javax.swing.JPanel {
         deleteBtn = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        idTxt = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        nameTxt = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        phoneTxt = new javax.swing.JTextField();
+        addDc = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        addressTxt = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        searchTxt = new javax.swing.JTextField();
+        searchBtn = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        suppliersTable = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(204, 204, 255));
-
-        actionsPane.setBackground(new java.awt.Color(204, 204, 255));
+        actionsPane.setBackground(new java.awt.Color(204, 204, 204, 80));
         actionsPane.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Actions", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 14))); // NOI18N
         actionsPane.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
 
@@ -138,16 +218,34 @@ public class SupplierForm extends javax.swing.JPanel {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204, 80));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Ajouter un fournisseur", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 14))); // NOI18N
 
         jLabel1.setText("Id");
 
         jLabel2.setText("Nom");
 
+        nameTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                nameTxtFocusGained(evt);
+            }
+        });
+
         jLabel3.setText("Téléphone");
 
+        phoneTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                phoneTxtFocusGained(evt);
+            }
+        });
+
         jLabel4.setText("Adresse");
+
+        addressTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                addressTxtFocusGained(evt);
+            }
+        });
 
         jLabel5.setText("Date Ajout");
 
@@ -169,58 +267,82 @@ public class SupplierForm extends javax.swing.JPanel {
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField4)
-                    .addComponent(jTextField3)
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField1)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(addressTxt)
+                    .addComponent(phoneTxt)
+                    .addComponent(nameTxt)
+                    .addComponent(idTxt)
+                    .addComponent(addDc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(idTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(phoneTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(addressTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addDc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204, 80));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Rechercher", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 14))); // NOI18N
+
+        searchTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchTxtActionPerformed(evt);
+            }
+        });
+
+        searchBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dev/stekos/cashregister/icons/iconfinder_Find_132785.png"))); // NOI18N
+        searchBtn.setText("Rechercher");
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(searchTxt)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(searchBtn)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 127, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchBtn))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204, 80));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Liste des fournisseurs", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 14))); // NOI18N
 
-        jTable1.setAutoCreateRowSorter(true);
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        suppliersTable.setAutoCreateRowSorter(true);
+        suppliersTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -231,7 +353,11 @@ public class SupplierForm extends javax.swing.JPanel {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        suppliersTable.setFocusable(false);
+        suppliersTable.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        suppliersTable.setRowHeight(25);
+        suppliersTable.setSelectionBackground(new java.awt.Color(232, 57, 95));
+        jScrollPane1.setViewportView(suppliersTable);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -245,7 +371,7 @@ public class SupplierForm extends javax.swing.JPanel {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(30, 30, 30)
                 .addComponent(jScrollPane1)
                 .addContainerGap())
         );
@@ -272,9 +398,9 @@ public class SupplierForm extends javax.swing.JPanel {
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(actionsPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -286,81 +412,60 @@ public class SupplierForm extends javax.swing.JPanel {
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         try {
-            if ("".equals(nameTxt.getText()) || "".equals(descTxt.getText())
-                || "".equals(priceTxt.getText()) || "".equals(quantityTxt.getText())
-                || "".equals(subCategoriesCb.getSelectedItem())) {
+            if ("".equals(nameTxt.getText()) || "".equals(phoneTxt.getText())
+                || "".equals(addressTxt.getText())) {
                 JOptionPane.showMessageDialog(this, "Oups ! Un champs est toujours vide, Veuillez la remplir.");
             } else {
-                Product product = new Product();
-                product.setName(nameTxt.getText());
-                if(isDouble(priceTxt.getText())) {
-                    product.setPrice(Double.parseDouble(priceTxt.getText()));
+                Supplier supplier = new Supplier();
+                supplier.setName(nameTxt.getText());
+                supplier.setPhone(phoneTxt.getText());
+                supplier.setAddress(addressTxt.getText());
+                if(addDc.getDate() == null) {
+                    Date date = new Date();
+                    supplier.setCreatedAt(date);
+                    supplier.setUpdatedAt(date);
                 } else {
-                    JOptionPane.showMessageDialog(this,
-                        "Le champs Prix doit contenir un nombre réel",
-                        "Alerte", JOptionPane.WARNING_MESSAGE
-                    );
+                    supplier.setCreatedAt(addDc.getDate());
+                    supplier.setUpdatedAt(addDc.getDate());
                 }
-
-                if(isDouble(quantityTxt.getText())) {
-                    product.setQuantity(Double.parseDouble(quantityTxt.getText()));
-                } else {
-                    JOptionPane.showMessageDialog(this,
-                        "Le champs Quantité doit contenir un nombre réel",
-                        "Alerte", JOptionPane.WARNING_MESSAGE
-                    );
-                }
-
-                SubCategory subCategory = (new SubCategoryDAO()).getByName(subCategoriesCb.getSelectedItem().toString());
-                product.setSubCategoryId(subCategory.getId());
-                Supplier supplier = (new SupplierDAO()).getByName(suppliersCb.getSelectedItem().toString());
-                product.setSupplierId(supplier.getId());
-                product.setDescription(descTxt.getText());
-                Date date = addDc.getDate();
-                product.setCreatedAt(date);
-                product.setUpdatedAt(date);
-                productDAO.add(product);
-                nameTxt.setText("");
-                priceTxt.setText("");
-                quantityTxt.setText("");
-                descTxt.setText("");
-                addBtn.setEnabled(false);
+                supplierDAO.add(supplier);
+                fillSuppliersTable();
+                cancelBtnActionPerformed(evt);
             }
         } catch (Exception ex) {
-            Logger.getLogger(ProductForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SupplierForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void editBtnFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_editBtnFocusLost
-        this.fillProductsTable();
+        this.fillSuppliersTable();
     }//GEN-LAST:event_editBtnFocusLost
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
         try {
-            Product product = productDAO.getById(Integer.parseInt(idTxt.getText()));
-            product.setName(nameTxt.getText());
-            product.setPrice(Double.parseDouble(priceTxt.getText()));
-            product.setQuantity(Double.parseDouble(quantityTxt.getText()));
-            product.setDescription(descTxt.getText());
-            product.setUpdatedAt(addDc.getDate());
-            SubCategory subCategory = (new SubCategoryDAO()).getByName(subCategoriesCb.getSelectedItem().toString());
-            product.setSubCategoryId(subCategory.getId());
-            Supplier supplier = (new SupplierDAO()).getByName(suppliersCb.getSelectedItem().toString());
-            product.setSupplierId(supplier.getId());
-            productDAO.edit(product);
+            Supplier supplier = supplierDAO.getById(Integer.parseInt(idTxt.getText()));
+            supplier.setName(nameTxt.getText());
+            supplier.setPhone(phoneTxt.getText());
+            supplier.setAddress(addressTxt.getText());
+            if(addDc.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Veuillez entrer une date valide", "Alerte", JOptionPane.WARNING_MESSAGE);
+            } else {
+                supplier.setUpdatedAt(addDc.getDate());
+                supplierDAO.edit(supplier);
+                fillSuppliersTable();
+                this.cancelBtnActionPerformed(evt);
+            }
+            
         } catch (Exception ex) {
-            Logger.getLogger(ProductForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SupplierForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.cancelBtnActionPerformed(evt);
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
         idTxt.setText("");
-        subCategoriesCb.setSelectedItem("");
         nameTxt.setText("");
-        priceTxt.setText("");
-        quantityTxt.setText("");
-        descTxt.setText("");
+        phoneTxt.setText("");
+        addressTxt.setText("");
         addDc.setCalendar(null);
         addBtn.setEnabled(true);
         editBtn.setEnabled(false);
@@ -369,28 +474,61 @@ public class SupplierForm extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void deleteBtnFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_deleteBtnFocusLost
-        this.fillProductsTable();
+        //this.fillSuppliersTable();
     }//GEN-LAST:event_deleteBtnFocusLost
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         int i = JOptionPane.showConfirmDialog(this, "Voulez-vous supprimer ce prdouit ?");
         if (i == 0) {
             try {
-                productDAO.remove(Integer.parseInt(idTxt.getText()));
+                supplierDAO.remove(Integer.parseInt(idTxt.getText()));
             } catch (NonexistentEntityException ex) {
-                Logger.getLogger(ProductForm.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SupplierForm.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        fillSuppliersTable();
+        cancelBtnActionPerformed(evt);
     }//GEN-LAST:event_deleteBtnActionPerformed
+
+    private void nameTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nameTxtFocusGained
+        enableAddButton();
+    }//GEN-LAST:event_nameTxtFocusGained
+
+    private void phoneTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_phoneTxtFocusGained
+        enableAddButton();
+    }//GEN-LAST:event_phoneTxtFocusGained
+
+    private void addressTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_addressTxtFocusGained
+        enableAddButton();
+    }//GEN-LAST:event_addressTxtFocusGained
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        Supplier supplier = supplierDAO.getByName(searchTxt.getText());
+        idTxt.setText(supplier.getId().toString());
+        nameTxt.setText(supplier.getName());
+        phoneTxt.setText(supplier.getPhone());
+        addressTxt.setText(supplier.getAddress());
+        addDc.setDate(supplier.getUpdatedAt());
+        addBtn.setEnabled(false);
+        editBtn.setEnabled(true);
+        cancelBtn.setEnabled(true);
+        deleteBtn.setEnabled(true);
+    }//GEN-LAST:event_searchBtnActionPerformed
+
+    private void searchTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTxtActionPerformed
+        searchBtnActionPerformed(evt);
+    }//GEN-LAST:event_searchTxtActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel actionsPane;
     private javax.swing.JButton addBtn;
+    private com.toedter.calendar.JDateChooser addDc;
+    private javax.swing.JTextField addressTxt;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton editBtn;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JTextField idTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -400,10 +538,10 @@ public class SupplierForm extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField nameTxt;
+    private javax.swing.JTextField phoneTxt;
+    private javax.swing.JButton searchBtn;
+    private javax.swing.JTextField searchTxt;
+    private javax.swing.JTable suppliersTable;
     // End of variables declaration//GEN-END:variables
 }

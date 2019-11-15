@@ -6,9 +6,9 @@
 package dev.stekos.cashregister.controllers;
 
 import dev.stekos.cashregister.controllers.exceptions.NonexistentEntityException;
-import dev.stekos.cashregister.controllers.exceptions.PreexistingEntityException;
 import dev.stekos.cashregister.models.Invoice;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -32,18 +32,13 @@ public class InvoiceJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Invoice invoice) throws PreexistingEntityException, Exception {
+    public void create(Invoice invoice) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(invoice);
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findInvoice(invoice.getId()) != null) {
-                throw new PreexistingEntityException("Invoice " + invoice + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -61,7 +56,7 @@ public class InvoiceJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                String id = invoice.getId();
+                Integer id = invoice.getId();
                 if (findInvoice(id) == null) {
                     throw new NonexistentEntityException("The invoice with id " + id + " no longer exists.");
                 }
@@ -74,7 +69,7 @@ public class InvoiceJpaController implements Serializable {
         }
     }
 
-    public void destroy(String id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -119,7 +114,7 @@ public class InvoiceJpaController implements Serializable {
         }
     }
 
-    public Invoice findInvoice(String id) {
+    public Invoice findInvoice(Integer id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Invoice.class, id);
@@ -141,4 +136,17 @@ public class InvoiceJpaController implements Serializable {
         }
     }
     
+    public Invoice findInvoice(String ref) {
+        EntityManager em = getEntityManager();
+        Invoice invoice = null;
+        try {
+            String sql = "SELECT i FROM Invoice i WHERE i.ref = :ref";
+            Query query = em.createQuery(sql);
+            query.setParameter("ref", ref);
+            invoice = (Invoice) query.getSingleResult();
+        } finally {
+            em.close();
+        }
+        return invoice;
+    }
 }

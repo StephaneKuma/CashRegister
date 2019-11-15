@@ -60,8 +60,8 @@ public class ProductDAO implements DAO<Product> {
      * @param id
      * @return 
      */
-    public List<Product> getByCategoryId(int id) {
-        return controller.findProductByCategoryId(id);
+    public List<Product> getBySubCategoryId(int id) {
+        return controller.findProductBySubCategoryId(id);
     }
     
     public Product getByName(String name) {

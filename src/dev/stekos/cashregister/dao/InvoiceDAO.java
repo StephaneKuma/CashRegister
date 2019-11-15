@@ -8,6 +8,7 @@ package dev.stekos.cashregister.dao;
 import dev.stekos.cashregister.controllers.InvoiceJpaController;
 import dev.stekos.cashregister.controllers.exceptions.NonexistentEntityException;
 import dev.stekos.cashregister.models.Invoice;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -37,7 +38,7 @@ public class InvoiceDAO implements DAO<Invoice> {
 
     @Override
     public void remove(int id) throws NonexistentEntityException {
-        controller.destroy(Integer.toString(id));
+        controller.destroy(id);
     }
 
     @Override
@@ -47,11 +48,15 @@ public class InvoiceDAO implements DAO<Invoice> {
 
     @Override
     public Invoice getById(int id) {
-        return controller.findInvoice(Integer.toString(id));
+        return controller.findInvoice(id);
     }
 
     @Override
     public int countEntities() {
         return getAll().size();
+    }
+
+    public Invoice getInvoice(String ref) {
+        return controller.findInvoice(ref);
     }
 }

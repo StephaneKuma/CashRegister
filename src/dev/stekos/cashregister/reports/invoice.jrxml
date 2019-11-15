@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="568777ee-17a8-4653-95bf-e7020a3d29e2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="303"/>
+	<parameter name="invoice_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT i.id, p.name, p.price, s.quantity, s.total, i.payable , i.paid, i.returned
+FROM products as p 
+INNER JOIN sales as s ON p.id = s.product_id 
+INNER JOIN invoices AS i ON s.invoice_id = i.id WHERE i.id = $P{invoice_id}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="price" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quantity" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="payable" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="paid" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="returned" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="Sales">
+		<groupFooter>
+			<band height="167">
+				<staticText>
+					<reportElement x="287" y="4" width="92" height="35" uuid="5b5c8d8b-21fa-42bd-9b6e-51b5b0533008"/>
+					<textElement>
+						<font fontName="Gabriola" size="19" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="287" y="49" width="92" height="35" uuid="84e379fe-925d-49f4-91ff-0203dfb864a4"/>
+					<textElement>
+						<font fontName="Gabriola" size="19" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Payé]]></text>
+				</staticText>
+				<line>
+					<reportElement x="287" y="101" width="239" height="1" uuid="bbce8134-9b2a-468e-8e76-2e0773600b87"/>
+				</line>
+				<staticText>
+					<reportElement x="287" y="116" width="92" height="35" uuid="b3448474-5fc4-4bb0-a727-23ae73d1c33b"/>
+					<textElement>
+						<font fontName="Gabriola" size="19" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Payé]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="434" y="17" width="92" height="22" uuid="db02581f-68af-4577-8760-79e16701be82"/>
+					<textElement>
+						<font fontName="Segoe UI" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{payable}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="436" y="65" width="92" height="19" uuid="c45bf0c0-41cd-4081-84a9-b24c2101a89b"/>
+					<textElement>
+						<font fontName="Segoe UI" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{paid}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="436" y="130" width="92" height="21" uuid="0dcf52fa-413d-401e-ab6b-367f0fbd3864"/>
+					<textElement>
+						<font fontName="Segoe UI" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{returned}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="197" y="21" width="156" height="58" uuid="8d665277-128f-40f5-ba47-d45d83957390"/>
+				<imageExpression><![CDATA["D:\\MyProjects\\JAVA\\CashRegister\\src\\dev\\stekos\\cashregister\\icons\\cashregister.PNG"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="63" splitType="Stretch">
+			<staticText>
+				<reportElement x="33" y="13" width="59" height="35" uuid="62436ecc-a682-4bfb-bee0-e81887651997"/>
+				<textElement>
+					<font fontName="Gabriola" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Facture N°]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="114" y="13" width="100" height="35" uuid="822d483a-91c7-4f71-b338-163e70454c7c"/>
+				<textElement>
+					<font fontName="Gabriola" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss Z">
+				<reportElement x="426" y="13" width="100" height="35" uuid="6be92eb9-4782-48cf-a4da-b2924ca6fc8d"/>
+				<textElement>
+					<font fontName="Gabriola" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="109" splitType="Stretch">
+			<staticText>
+				<reportElement x="33" y="40" width="92" height="35" uuid="aad6458e-d7cf-46df-91b5-75f69a786fa6"/>
+				<textElement>
+					<font fontName="Gabriola" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Désignation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="169" y="38" width="92" height="35" uuid="a339948d-e1dc-4705-b11e-4f26b2537dbf"/>
+				<textElement>
+					<font fontName="Gabriola" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Prix Unitaire]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="301" y="38" width="92" height="35" uuid="a9d68f9b-0026-4f7b-bd86-85a1c8730afd"/>
+				<textElement>
+					<font fontName="Gabriola" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantité]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="434" y="38" width="92" height="35" uuid="30d1f138-bac3-4b42-9efc-5694217407d5"/>
+				<textElement>
+					<font fontName="Gabriola" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<line>
+				<reportElement x="33" y="16" width="493" height="1" uuid="d7270c25-167b-495a-98c1-efee7fefb79f"/>
+			</line>
+			<line>
+				<reportElement x="35" y="93" width="493" height="1" uuid="7ff634c6-eb77-4794-997a-513dd2f98ed3"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="72" splitType="Stretch">
+			<textField>
+				<reportElement x="33" y="10" width="92" height="27" uuid="b6695a55-3b1f-4061-83c6-6ca60bedda9c"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="169" y="10" width="92" height="27" uuid="8874e1bb-b681-4236-a6ef-2db4d817068a"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="301" y="10" width="92" height="27" uuid="872a7990-6da4-4090-b980-110e5b44223e"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="10" width="92" height="27" uuid="33dedd6d-7050-41f0-9dd4-3b63604b2d1a"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="33" y="54" width="493" height="1" uuid="3eaf4da8-a9df-4cb2-85ec-2d8f451dac2e"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="92" splitType="Stretch">
+			<staticText>
+				<reportElement x="70" y="10" width="397" height="70" uuid="f08fb6d3-4d1e-4c93-b795-1efe8bc4d41b"/>
+				<textElement>
+					<font fontName="Gabriola" size="36" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Merci, au plaisir de vous revoir.]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="40" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="34" splitType="Stretch"/>
+	</summary>
+</jasperReport>

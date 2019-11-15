@@ -6,14 +6,17 @@
 package dev.stekos.cashregister.views;
 
 import dev.stekos.cashregister.controllers.exceptions.NonexistentEntityException;
-import dev.stekos.cashregister.dao.CategoryDAO;
 import dev.stekos.cashregister.dao.ProductDAO;
 import dev.stekos.cashregister.dao.SubCategoryDAO;
 import dev.stekos.cashregister.dao.SupplierDAO;
-import dev.stekos.cashregister.models.Category;
 import dev.stekos.cashregister.models.Product;
 import dev.stekos.cashregister.models.SubCategory;
 import dev.stekos.cashregister.models.Supplier;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,12 +44,18 @@ public class ProductForm extends javax.swing.JPanel {
         initComponents();
         idTxt.setEditable(false);
         fillSubCategoriesComboBox(subCategoriesCb);
-        fillSubCategoriesComboBox(catSearchCb);
+        fillSubCategoriesComboBox(subCatSearchCb);
         fillSuppliersComboBox(suppliersCb);
+        fillSuppliersComboBox(supplierSearchCb);
         addBtn.setEnabled(false);
         editBtn.setEnabled(false);
         cancelBtn.setEnabled(false);
         deleteBtn.setEnabled(false);
+        productsTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
+        productsTable.getTableHeader().setOpaque(false);
+        productsTable.getTableHeader().setBackground(new Color(32, 136, 203));
+        productsTable.getTableHeader().setForeground(new Color(255, 255, 255));
+        productsTable.setRowHeight(25);
         productsTable.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
             if (productsTable.getSelectedRow() != -1) {
                 try {
@@ -57,11 +66,12 @@ public class ProductForm extends javax.swing.JPanel {
                     int selectedRow = productsTable.getSelectedRow();
                     idTxt.setText((productsTable.getValueAt(selectedRow, 0).toString()));
                     subCategoriesCb.setSelectedItem((productsTable.getValueAt(selectedRow, 1).toString()));
-                    nameTxt.setText((productsTable.getValueAt(selectedRow, 2).toString()));
-                    priceTxt.setText((productsTable.getValueAt(selectedRow, 3).toString()));
-                    quantityTxt.setText((productsTable.getValueAt(selectedRow, 4).toString()));
-                    descTxt.setText((productsTable.getValueAt(selectedRow, 5).toString()));
-                    Date date = new SimpleDateFormat("dd-MM-yyyy").parse((productsTable.getValueAt(selectedRow, 6)).toString());
+                    suppliersCb.setSelectedItem(productsTable.getValueAt(selectedRow, 2).toString());
+                    nameTxt.setText((productsTable.getValueAt(selectedRow, 3).toString()));
+                    priceTxt.setText((productsTable.getValueAt(selectedRow, 4).toString()));
+                    quantityTxt.setText((productsTable.getValueAt(selectedRow, 5).toString()));
+                    descTxt.setText((productsTable.getValueAt(selectedRow, 6).toString()));
+                    Date date = new SimpleDateFormat("dd-MM-yyyy").parse((productsTable.getValueAt(selectedRow, 7)).toString());
                     addDc.setDate(date);
                 } catch (ParseException ex) {
                     Logger.getLogger(ProductForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -69,6 +79,18 @@ public class ProductForm extends javax.swing.JPanel {
             }
         });
         fillProductsTable();
+    }
+    
+    @Override
+    protected void paintComponent(Graphics graphics) {
+        Graphics2D graphics2D = (Graphics2D) graphics;
+        int width = getWidth();
+        int height = getHeight();
+        Color color1 = new Color(71, 120, 197);
+        Color color2 = new Color(23, 35, 51);
+        GradientPaint gradientPaint = new GradientPaint(0, 0, color1, 180, height, color2);
+        graphics2D.setPaint(gradientPaint);
+        graphics2D.fillRect(0, 0, width, height);
     }
     
     private void setProductsTable(List<Product> products, int rows) {
@@ -180,10 +202,14 @@ public class ProductForm extends javax.swing.JPanel {
         searchPane = new javax.swing.JPanel();
         categorieBtn = new javax.swing.JButton();
         nameBtn = new javax.swing.JButton();
+        supplierBtn = new javax.swing.JButton();
         searchLyP = new javax.swing.JLayeredPane();
         catSearchPane = new javax.swing.JPanel();
-        catSearchBtn = new javax.swing.JButton();
-        catSearchCb = new javax.swing.JComboBox<>();
+        subCatSearchBtn = new javax.swing.JButton();
+        subCatSearchCb = new javax.swing.JComboBox<>();
+        supplierSearchPane = new javax.swing.JPanel();
+        supplierSearchBtn = new javax.swing.JButton();
+        supplierSearchCb = new javax.swing.JComboBox<>();
         nameSearchPane = new javax.swing.JPanel();
         nameSearchTxt = new javax.swing.JTextField();
         nameSearchBtn = new javax.swing.JButton();
@@ -191,9 +217,7 @@ public class ProductForm extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         productsTable = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(204, 204, 255));
-
-        addProdPane.setBackground(new java.awt.Color(204, 204, 255));
+        addProdPane.setBackground(new java.awt.Color(204, 204, 204, 80));
         addProdPane.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Ajouter un produit", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 14))); // NOI18N
         addProdPane.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
 
@@ -320,10 +344,11 @@ public class ProductForm extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        actionsPane.setBackground(new java.awt.Color(204, 204, 255));
+        actionsPane.setBackground(new java.awt.Color(204, 204, 204, 80));
         actionsPane.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Actions", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 14))); // NOI18N
         actionsPane.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
 
+        addBtn.setBackground(new java.awt.Color(204, 204, 255, 40));
         addBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dev/stekos/cashregister/icons/add.png"))); // NOI18N
         addBtn.setText("Ajouter");
         addBtn.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -337,6 +362,7 @@ public class ProductForm extends javax.swing.JPanel {
             }
         });
 
+        editBtn.setBackground(new java.awt.Color(204, 204, 255, 40));
         editBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dev/stekos/cashregister/icons/update.png"))); // NOI18N
         editBtn.setText("Modifier");
         editBtn.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -350,6 +376,7 @@ public class ProductForm extends javax.swing.JPanel {
             }
         });
 
+        cancelBtn.setBackground(new java.awt.Color(204, 204, 255, 40));
         cancelBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dev/stekos/cashregister/icons/cancel.png"))); // NOI18N
         cancelBtn.setText("Annuler");
         cancelBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -358,6 +385,7 @@ public class ProductForm extends javax.swing.JPanel {
             }
         });
 
+        deleteBtn.setBackground(new java.awt.Color(204, 204, 255, 40));
         deleteBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dev/stekos/cashregister/icons/delete.png"))); // NOI18N
         deleteBtn.setText("Supprimer");
         deleteBtn.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -402,10 +430,11 @@ public class ProductForm extends javax.swing.JPanel {
                 .addGap(18, 18, 18))
         );
 
-        searchPane.setBackground(new java.awt.Color(204, 204, 255));
+        searchPane.setBackground(new java.awt.Color(204, 204, 204, 80));
         searchPane.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Rechercher", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 14))); // NOI18N
         searchPane.setFont(new java.awt.Font("Segoe UI Historic", 0, 12)); // NOI18N
 
+        categorieBtn.setBackground(new java.awt.Color(204, 204, 255));
         categorieBtn.setText("Sous cat.");
         categorieBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -413,6 +442,7 @@ public class ProductForm extends javax.swing.JPanel {
             }
         });
 
+        nameBtn.setBackground(new java.awt.Color(204, 204, 255));
         nameBtn.setText("Nom");
         nameBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -420,20 +450,31 @@ public class ProductForm extends javax.swing.JPanel {
             }
         });
 
-        searchLyP.setLayout(new java.awt.CardLayout());
-
-        catSearchBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dev/stekos/cashregister/icons/iconfinder_Find_132785.png"))); // NOI18N
-        catSearchBtn.setText("Rechercher");
-        catSearchBtn.addActionListener(new java.awt.event.ActionListener() {
+        supplierBtn.setBackground(new java.awt.Color(204, 204, 255));
+        supplierBtn.setText("Fournisseur");
+        supplierBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                catSearchBtnActionPerformed(evt);
+                supplierBtnActionPerformed(evt);
             }
         });
 
-        catSearchCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        catSearchCb.addActionListener(new java.awt.event.ActionListener() {
+        searchLyP.setLayout(new java.awt.CardLayout());
+
+        catSearchPane.setBackground(new java.awt.Color(204, 204, 204, 80));
+
+        subCatSearchBtn.setBackground(new java.awt.Color(204, 204, 255));
+        subCatSearchBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dev/stekos/cashregister/icons/iconfinder_Find_132785.png"))); // NOI18N
+        subCatSearchBtn.setText("Rechercher");
+        subCatSearchBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                catSearchCbActionPerformed(evt);
+                subCatSearchBtnActionPerformed(evt);
+            }
+        });
+
+        subCatSearchCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        subCatSearchCb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subCatSearchCbActionPerformed(evt);
             }
         });
 
@@ -443,9 +484,9 @@ public class ProductForm extends javax.swing.JPanel {
             catSearchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(catSearchPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(catSearchCb, 0, 233, Short.MAX_VALUE)
+                .addComponent(subCatSearchCb, 0, 233, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(catSearchBtn)
+                .addComponent(subCatSearchBtn)
                 .addContainerGap())
         );
         catSearchPaneLayout.setVerticalGroup(
@@ -453,12 +494,54 @@ public class ProductForm extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, catSearchPaneLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(catSearchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(catSearchBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                    .addComponent(catSearchCb))
+                    .addComponent(subCatSearchBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(subCatSearchCb))
                 .addContainerGap())
         );
 
         searchLyP.add(catSearchPane, "card2");
+
+        supplierSearchPane.setBackground(new java.awt.Color(204, 204, 204, 80));
+
+        supplierSearchBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dev/stekos/cashregister/icons/iconfinder_Find_132785.png"))); // NOI18N
+        supplierSearchBtn.setText("Rechercher");
+        supplierSearchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supplierSearchBtnActionPerformed(evt);
+            }
+        });
+
+        supplierSearchCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        supplierSearchCb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supplierSearchCbActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout supplierSearchPaneLayout = new javax.swing.GroupLayout(supplierSearchPane);
+        supplierSearchPane.setLayout(supplierSearchPaneLayout);
+        supplierSearchPaneLayout.setHorizontalGroup(
+            supplierSearchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(supplierSearchPaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(supplierSearchCb, 0, 233, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(supplierSearchBtn)
+                .addContainerGap())
+        );
+        supplierSearchPaneLayout.setVerticalGroup(
+            supplierSearchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, supplierSearchPaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(supplierSearchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(supplierSearchBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(supplierSearchCb))
+                .addContainerGap())
+        );
+
+        searchLyP.add(supplierSearchPane, "card2");
+
+        nameSearchPane.setBackground(new java.awt.Color(204, 204, 204, 80));
 
         nameSearchBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dev/stekos/cashregister/icons/iconfinder_Find_132785.png"))); // NOI18N
         nameSearchBtn.setText("Rechercher");
@@ -496,13 +579,14 @@ public class ProductForm extends javax.swing.JPanel {
         searchPaneLayout.setHorizontalGroup(
             searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(searchPaneLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(searchLyP)
                     .addGroup(searchPaneLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(searchLyP))
-                    .addGroup(searchPaneLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addGap(11, 11, 11)
                         .addComponent(categorieBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
+                        .addComponent(supplierBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(nameBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -513,13 +597,14 @@ public class ProductForm extends javax.swing.JPanel {
                 .addGap(4, 4, 4)
                 .addGroup(searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(categorieBtn)
-                    .addComponent(nameBtn))
+                    .addComponent(nameBtn)
+                    .addComponent(supplierBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(searchLyP)
                 .addContainerGap())
         );
 
-        productsPane2.setBackground(new java.awt.Color(204, 204, 255));
+        productsPane2.setBackground(new java.awt.Color(204, 204, 204, 80));
         productsPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Liste des produits", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 1, 14))); // NOI18N
 
         productsTable.setAutoCreateRowSorter(true);
@@ -534,6 +619,10 @@ public class ProductForm extends javax.swing.JPanel {
 
             }
         ));
+        productsTable.setFocusable(false);
+        productsTable.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        productsTable.setRowHeight(25);
+        productsTable.setSelectionBackground(new java.awt.Color(232, 57, 95));
         jScrollPane3.setViewportView(productsTable);
 
         javax.swing.GroupLayout productsPane2Layout = new javax.swing.GroupLayout(productsPane2);
@@ -607,7 +696,7 @@ public class ProductForm extends javax.swing.JPanel {
         try {
             if ("".equals(nameTxt.getText()) || "".equals(descTxt.getText())
                 || "".equals(priceTxt.getText()) || "".equals(quantityTxt.getText()) 
-                    || "".equals(subCategoriesCb.getSelectedItem())) {
+                    || "".equals(subCategoriesCb.getSelectedItem()) || "".equals(suppliersCb.getSelectedItem())) {
                 JOptionPane.showMessageDialog(this, "Oups ! Un champs est toujours vide, Veuillez la remplir.");
             } else {
                 Product product = new Product();
@@ -635,15 +724,19 @@ public class ProductForm extends javax.swing.JPanel {
                 Supplier supplier = (new SupplierDAO()).getByName(suppliersCb.getSelectedItem().toString());
                 product.setSupplierId(supplier.getId());
                 product.setDescription(descTxt.getText());
-                Date date = addDc.getDate();
-                product.setCreatedAt(date);
-                product.setUpdatedAt(date);
+                
+                if (addDc.getDate() == null) {
+                    Date date = new Date();
+                    product.setCreatedAt(date);
+                    product.setUpdatedAt(date);
+                } else {
+                    product.setCreatedAt(addDc.getDate());
+                    product.setUpdatedAt(addDc.getDate());
+                }
+                
                 productDAO.add(product);
-                nameTxt.setText("");
-                priceTxt.setText("");
-                quantityTxt.setText("");
-                descTxt.setText("");
-                addBtn.setEnabled(false);
+                fillProductsTable();
+                cancelBtnActionPerformed(evt);
             }
         } catch (Exception ex) {
             Logger.getLogger(ProductForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -651,44 +744,78 @@ public class ProductForm extends javax.swing.JPanel {
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void editBtnFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_editBtnFocusLost
-        this.fillProductsTable();
+        //this.fillProductsTable();
     }//GEN-LAST:event_editBtnFocusLost
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
         try {
             Product product = productDAO.getById(Integer.parseInt(idTxt.getText()));
-            product.setName(nameTxt.getText());
-            product.setPrice(Double.parseDouble(priceTxt.getText()));
-            product.setQuantity(Double.parseDouble(quantityTxt.getText()));
-            product.setDescription(descTxt.getText());
-            product.setUpdatedAt(addDc.getDate());
-            SubCategory subCategory = (new SubCategoryDAO()).getByName(subCategoriesCb.getSelectedItem().toString());
-            product.setSubCategoryId(subCategory.getId());
-            Supplier supplier = (new SupplierDAO()).getByName(suppliersCb.getSelectedItem().toString());
-            product.setSupplierId(supplier.getId());
+            
+            if ("".equals(nameTxt.getText()) || "".equals(descTxt.getText())
+                || "".equals(priceTxt.getText()) || "".equals(quantityTxt.getText()) 
+                    || "".equals(subCategoriesCb.getSelectedItem()) || "".equals(suppliersCb.getSelectedItem())) {
+                JOptionPane.showMessageDialog(this, "Oups ! Un champs est toujours vide, Veuillez la remplir.");
+            } else {
+                product.setName(nameTxt.getText());
+                product.setDescription(descTxt.getText());
+                SubCategory subCategory = (new SubCategoryDAO()).getByName(subCategoriesCb.getSelectedItem().toString());
+                product.setSubCategoryId(subCategory.getId());
+                Supplier supplier = (new SupplierDAO()).getByName(suppliersCb.getSelectedItem().toString());
+                product.setSupplierId(supplier.getId());
+            }
+            
+            if(isDouble(priceTxt.getText())) {
+                product.setPrice(Double.parseDouble(priceTxt.getText()));
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Le champs Prix doit contenir un nombre réel",
+                        "Alerte", JOptionPane.WARNING_MESSAGE
+                );
+            }
+
+            if(isDouble(quantityTxt.getText())) {
+                product.setQuantity(Double.parseDouble(quantityTxt.getText()));
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Le champs Quantité doit contenir un nombre réel",
+                        "Alerte", JOptionPane.WARNING_MESSAGE
+                );
+            }
+            
+            if (addDc.getDate() != null) {
+                product.setUpdatedAt(addDc.getDate());
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Veuillez entrer une date valide",
+                        "Alerte", JOptionPane.WARNING_MESSAGE
+                );
+            }
+            
             productDAO.edit(product);
+            fillProductsTable();
+            this.cancelBtnActionPerformed(evt);
         } catch (Exception ex) {
             Logger.getLogger(ProductForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.cancelBtnActionPerformed(evt);
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
         idTxt.setText("");
         subCategoriesCb.setSelectedItem("");
+        suppliersCb.setSelectedItem("");
         nameTxt.setText("");
         priceTxt.setText("");
         quantityTxt.setText("");
         descTxt.setText("");
         addDc.setCalendar(null);
-        addBtn.setEnabled(true);
+        addBtn.setEnabled(false);
         editBtn.setEnabled(false);
         cancelBtn.setEnabled(false);
         deleteBtn.setEnabled(false);
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void deleteBtnFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_deleteBtnFocusLost
-        this.fillProductsTable();
+        //this.fillProductsTable();
     }//GEN-LAST:event_deleteBtnFocusLost
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
@@ -700,29 +827,30 @@ public class ProductForm extends javax.swing.JPanel {
                 Logger.getLogger(ProductForm.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        fillProductsTable();
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void subCategoriesCbFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_subCategoriesCbFocusGained
         enableAddButton();
     }//GEN-LAST:event_subCategoriesCbFocusGained
 
-    private void catSearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catSearchBtnActionPerformed
-        if(!("".equals(catSearchCb.getSelectedItem().toString()))){
-            Category category = (new CategoryDAO()).getByType(catSearchCb.getSelectedItem().toString());
-            List<Product> products = productDAO.getByCategoryId(category.getId());
+    private void subCatSearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subCatSearchBtnActionPerformed
+        if(!("".equals(subCatSearchCb.getSelectedItem().toString()))){
+            SubCategory subCategory = (new SubCategoryDAO()).getByName(subCatSearchCb.getSelectedItem().toString());
+            List<Product> products = productDAO.getBySubCategoryId(subCategory.getId());
             fillProductsTable(products);
             addBtn.setEnabled(false);
             editBtn.setEnabled(true);
             cancelBtn.setEnabled(true);
             deleteBtn.setEnabled(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Choississez une categorie", "Alerte", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Choississez une sous-categorie", "Alerte", JOptionPane.WARNING_MESSAGE);
         }
-    }//GEN-LAST:event_catSearchBtnActionPerformed
+    }//GEN-LAST:event_subCatSearchBtnActionPerformed
 
-    private void catSearchCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catSearchCbActionPerformed
+    private void subCatSearchCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subCatSearchCbActionPerformed
 //        catSearchBtnActionPerformed(evt);
-    }//GEN-LAST:event_catSearchCbActionPerformed
+    }//GEN-LAST:event_subCatSearchCbActionPerformed
 
     private void categorieBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categorieBtnActionPerformed
         switchPanels(catSearchPane);
@@ -750,6 +878,28 @@ public class ProductForm extends javax.swing.JPanel {
         deleteBtn.setEnabled(true);
     }//GEN-LAST:event_nameSearchBtnActionPerformed
 
+    private void supplierSearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierSearchBtnActionPerformed
+        if(!("".equals(supplierSearchCb.getSelectedItem().toString()))){
+            Supplier supplier = (new SupplierDAO()).getByName(supplierSearchCb.getSelectedItem().toString());
+            List<Product> products = productDAO.getBySubCategoryId(supplier.getId());
+            fillProductsTable(products);
+            addBtn.setEnabled(false);
+            editBtn.setEnabled(true);
+            cancelBtn.setEnabled(true);
+            deleteBtn.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Choississez un fournisseur", "Alerte", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_supplierSearchBtnActionPerformed
+
+    private void supplierSearchCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierSearchCbActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_supplierSearchCbActionPerformed
+
+    private void supplierBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierBtnActionPerformed
+        switchPanels(supplierSearchPane);
+    }//GEN-LAST:event_supplierBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel actionsPane;
@@ -757,8 +907,6 @@ public class ProductForm extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser addDc;
     private javax.swing.JPanel addProdPane;
     private javax.swing.JButton cancelBtn;
-    private javax.swing.JButton catSearchBtn;
-    private javax.swing.JComboBox<String> catSearchCb;
     private javax.swing.JPanel catSearchPane;
     private javax.swing.JButton categorieBtn;
     private javax.swing.JButton deleteBtn;
@@ -785,7 +933,13 @@ public class ProductForm extends javax.swing.JPanel {
     private javax.swing.JTextField quantityTxt;
     private javax.swing.JLayeredPane searchLyP;
     private javax.swing.JPanel searchPane;
+    private javax.swing.JButton subCatSearchBtn;
+    private javax.swing.JComboBox<String> subCatSearchCb;
     private javax.swing.JComboBox<String> subCategoriesCb;
+    private javax.swing.JButton supplierBtn;
+    private javax.swing.JButton supplierSearchBtn;
+    private javax.swing.JComboBox<String> supplierSearchCb;
+    private javax.swing.JPanel supplierSearchPane;
     private javax.swing.JComboBox<String> suppliersCb;
     // End of variables declaration//GEN-END:variables
 }

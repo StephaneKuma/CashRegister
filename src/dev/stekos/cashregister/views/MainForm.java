@@ -8,8 +8,9 @@ package dev.stekos.cashregister.views;
 
 import dev.stekos.cashregister.dao.CategoryDAO;
 import dev.stekos.cashregister.dao.ProductDAO;
+import dev.stekos.cashregister.dao.SubCategoryDAO;
+import dev.stekos.cashregister.dao.SupplierDAO;
 import java.awt.Color;
-import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,15 +21,16 @@ import javax.swing.JPanel;
  */
 public class MainForm extends javax.swing.JFrame {
     private int xx, xy;
-
-    /** Creates new form MainForm */
+    
     public MainForm() {
         initComponents();
         setColor(dashPane); 
         dash.setOpaque(true);
         resetColor(new JPanel[]{productPane,categoryPane}, new JPanel[]{product,category});
         catLbl.setText(Integer.toString((new CategoryDAO()).getAll().size()));
+        subCategoryLbl.setText(Integer.toString((new SubCategoryDAO()).getAll().size()));
         productLbl.setText(Integer.toString((new ProductDAO()).getAll().size()));
+        supplierLbl.setText(Integer.toString((new SupplierDAO()).getAll().size()));
     }
     
      private void setColor(JPanel pane)
@@ -76,22 +78,54 @@ public class MainForm extends javax.swing.JFrame {
         productPane = new javax.swing.JPanel();
         product = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
+        supplierPane = new javax.swing.JPanel();
+        supplier = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        cashierPane = new javax.swing.JPanel();
+        cashier = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
         headerPane = new javax.swing.JPanel();
         mainLbl = new javax.swing.JLabel();
         mainPane = new javax.swing.JLayeredPane();
-        dashboardPane = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        dashboardPane = new dev.stekos.cashregister.views.GradientPanel();
+        jPanel2 = new dev.stekos.cashregister.views.GradientPanel();
         catLbl = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel4 = new dev.stekos.cashregister.views.GradientPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        supplierLbl = new javax.swing.JLabel();
+        jPanel3 = new dev.stekos.cashregister.views.GradientPanel();
         productLbl = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel6 = new dev.stekos.cashregister.views.GradientPanel();
+        jLabel13 = new javax.swing.JLabel();
+        subCategoryLbl = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem12 = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem13 = new javax.swing.JMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cash Register");
-        setAlwaysOnTop(true);
         setMinimumSize(new java.awt.Dimension(867, 589));
-        setPreferredSize(new java.awt.Dimension(1295, 648));
+        setPreferredSize(new java.awt.Dimension(1296, 670));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(23, 35, 51));
@@ -266,7 +300,103 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel1.add(productPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 160, -1));
+        jPanel1.add(productPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 160, -1));
+
+        supplierPane.setBackground(new java.awt.Color(23, 35, 51));
+        supplierPane.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                supplierPaneMouseReleased(evt);
+            }
+        });
+
+        supplier.setOpaque(false);
+        supplier.setPreferredSize(new java.awt.Dimension(3, 43));
+
+        javax.swing.GroupLayout supplierLayout = new javax.swing.GroupLayout(supplier);
+        supplier.setLayout(supplierLayout);
+        supplierLayout.setHorizontalGroup(
+            supplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 3, Short.MAX_VALUE)
+        );
+        supplierLayout.setVerticalGroup(
+            supplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 43, Short.MAX_VALUE)
+        );
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Fournisseur");
+
+        javax.swing.GroupLayout supplierPaneLayout = new javax.swing.GroupLayout(supplierPane);
+        supplierPane.setLayout(supplierPaneLayout);
+        supplierPaneLayout.setHorizontalGroup(
+            supplierPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(supplierPaneLayout.createSequentialGroup()
+                .addComponent(supplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel11)
+                .addGap(0, 61, Short.MAX_VALUE))
+        );
+        supplierPaneLayout.setVerticalGroup(
+            supplierPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(supplierPaneLayout.createSequentialGroup()
+                .addComponent(supplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(supplierPaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel1.add(supplierPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 160, -1));
+
+        cashierPane.setBackground(new java.awt.Color(23, 35, 51));
+        cashierPane.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                cashierPaneMouseReleased(evt);
+            }
+        });
+
+        cashier.setOpaque(false);
+        cashier.setPreferredSize(new java.awt.Dimension(3, 43));
+
+        javax.swing.GroupLayout cashierLayout = new javax.swing.GroupLayout(cashier);
+        cashier.setLayout(cashierLayout);
+        cashierLayout.setHorizontalGroup(
+            cashierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 3, Short.MAX_VALUE)
+        );
+        cashierLayout.setVerticalGroup(
+            cashierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 43, Short.MAX_VALUE)
+        );
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Caisse");
+
+        javax.swing.GroupLayout cashierPaneLayout = new javax.swing.GroupLayout(cashierPane);
+        cashierPane.setLayout(cashierPaneLayout);
+        cashierPaneLayout.setHorizontalGroup(
+            cashierPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cashierPaneLayout.createSequentialGroup()
+                .addComponent(cashier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel12)
+                .addGap(0, 89, Short.MAX_VALUE))
+        );
+        cashierPaneLayout.setVerticalGroup(
+            cashierPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cashierPaneLayout.createSequentialGroup()
+                .addComponent(cashier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(cashierPaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel1.add(cashierPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 160, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 620));
 
@@ -307,13 +437,12 @@ public class MainForm extends javax.swing.JFrame {
 
         mainPane.setBackground(new java.awt.Color(204, 204, 255));
         mainPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        mainPane.setPreferredSize(null);
+        mainPane.setPreferredSize(new java.awt.Dimension(1134, 566));
         mainPane.setLayout(new java.awt.CardLayout());
 
-        dashboardPane.setBackground(new java.awt.Color(204, 204, 255));
         dashboardPane.setPreferredSize(new java.awt.Dimension(1068, 526));
 
-        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         catLbl.setBackground(new java.awt.Color(0, 0, 0));
         catLbl.setFont(new java.awt.Font("Segoe UI Historic", 0, 12)); // NOI18N
@@ -324,28 +453,72 @@ public class MainForm extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Catégories");
 
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dev/stekos/cashregister/icons/icons8-undefined-30.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addComponent(catLbl)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addContainerGap(60, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(53, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(catLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel3)))
+                .addGap(51, 51, 51))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(21, 21, 21)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(catLbl)
                     .addComponent(jLabel2))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dev/stekos/cashregister/icons/icons8-fournisseur-32.png"))); // NOI18N
+
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Fournisseurs");
+
+        supplierLbl.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(supplierLbl)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
+                .addGap(36, 36, 36))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(supplierLbl))
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+
+        jPanel3.setBackground(new java.awt.Color(102, 153, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         productLbl.setBackground(new java.awt.Color(0, 0, 0));
         productLbl.setFont(new java.awt.Font("Segoe UI Historic", 0, 12)); // NOI18N
@@ -356,25 +529,68 @@ public class MainForm extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Produits");
 
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dev/stekos/cashregister/icons/icons8-nouveau-produit-30.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(67, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(58, 58, 58)
                 .addComponent(productLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addGap(65, 65, 65))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(productLbl)
                     .addComponent(jLabel4))
-                .addGap(31, 31, 31))
+                .addGap(21, 21, 21))
+        );
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dev/stekos/cashregister/icons/icons8-undefined-30.png"))); // NOI18N
+
+        subCategoryLbl.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Sous Catégories");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap(44, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addGap(66, 66, 66))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(subCategoryLbl)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel15)
+                        .addGap(26, 26, 26))))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(subCategoryLbl)
+                    .addComponent(jLabel15))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout dashboardPaneLayout = new javax.swing.GroupLayout(dashboardPane);
@@ -382,54 +598,110 @@ public class MainForm extends javax.swing.JFrame {
         dashboardPaneLayout.setHorizontalGroup(
             dashboardPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dashboardPaneLayout.createSequentialGroup()
-                .addGap(135, 135, 135)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(592, Short.MAX_VALUE))
+                .addGap(270, 270, 270)
+                .addGroup(dashboardPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(187, 187, 187)
+                .addGroup(dashboardPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(329, Short.MAX_VALUE))
         );
         dashboardPaneLayout.setVerticalGroup(
             dashboardPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dashboardPaneLayout.createSequentialGroup()
-                .addGap(210, 210, 210)
-                .addGroup(dashboardPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(136, 136, 136)
+                .addGroup(dashboardPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(71, 71, 71)
+                .addGroup(dashboardPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(267, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
 
         mainPane.add(dashboardPane, "card2");
 
         getContentPane().add(mainPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 1130, 560));
 
+        jMenu1.setText("Fichier");
+
+        jMenuItem6.setText("Ajouter Catégorie");
+        jMenu1.add(jMenuItem6);
+        jMenu1.add(jSeparator1);
+
+        jMenuItem10.setText("Ajouter Fournisseur");
+        jMenu1.add(jMenuItem10);
+        jMenu1.add(jSeparator2);
+
+        jMenuItem11.setText("Ajouter Produit");
+        jMenu1.add(jMenuItem11);
+        jMenu1.add(jSeparator3);
+
+        jMenuItem12.setText("Quitter");
+        jMenu1.add(jMenuItem12);
+        jMenu1.add(jSeparator4);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Options");
+
+        jMenuItem1.setText("Rapport Achats");
+        jMenu2.add(jMenuItem1);
+        jMenu2.add(jSeparator5);
+
+        jMenuItem13.setText("Rapport Categories");
+        jMenu2.add(jMenuItem13);
+        jMenu2.add(jSeparator6);
+
+        jMenuItem14.setText("Rapport Fournisseurs");
+        jMenu2.add(jMenuItem14);
+
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Aide");
+        jMenuBar1.add(jMenu3);
+
+        setJMenuBar(jMenuBar1);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void dashPaneMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashPaneMousePressed
-        // TODO add your handling code here:
         setColor(dashPane);
         dash.setOpaque(true);
         resetColor(new JPanel[]{
             productPane,
+            supplierPane,
             categoryPane,
         }, new JPanel[]{
             product,
+            supplier,
             category,
         });
+        catLbl.setText(Integer.toString((new CategoryDAO()).getAll().size()));
+        subCategoryLbl.setText(Integer.toString((new SubCategoryDAO()).getAll().size()));
+        productLbl.setText(Integer.toString((new ProductDAO()).getAll().size()));
+        supplierLbl.setText(Integer.toString((new SupplierDAO()).getAll().size()));
         mainLbl.setText("Tableau de bord");
         switchPanels(dashboardPane);
     }//GEN-LAST:event_dashPaneMousePressed
 
     private void categoryPaneMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_categoryPaneMousePressed
-        // TODO add your handling code here:
         setColor(categoryPane);
         category.setOpaque(true);
         resetColor(new JPanel[]{
             productPane,
             dashPane,
+            supplierPane,
+            cashierPane
         }, new JPanel[]{
             product,
             dash,
+            supplier,
+            cashier
         });
         CategoryForm categoryForm = new CategoryForm();
         categoryForm.setName("Catégories");
@@ -438,15 +710,18 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_categoryPaneMousePressed
 
     private void productPaneMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productPaneMouseReleased
-        // TODO add your handling code here:
         setColor(productPane);
         product.setOpaque(true);
         resetColor(new JPanel[]{
             dashPane,
             categoryPane,
+            supplierPane,
+            cashierPane
         }, new JPanel[]{
             dash,
             category,
+            supplier,
+            cashier
         });
         ProductForm productForm = new ProductForm();
         productForm.setName("Produits");
@@ -455,20 +730,55 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_productPaneMouseReleased
 
     private void headerPaneMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerPaneMouseDragged
-        // TODO add your handling code here:
-
-        //source to drag
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x-xx,y-xy);
     }//GEN-LAST:event_headerPaneMouseDragged
 
     private void headerPaneMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerPaneMousePressed
-        // TODO add your handling code here:
-        //drag this pane
         xx = evt.getX();
         xy = evt.getY();
     }//GEN-LAST:event_headerPaneMousePressed
+
+    private void supplierPaneMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supplierPaneMouseReleased
+        setColor(supplierPane);
+        supplier.setOpaque(true);
+        resetColor(new JPanel[]{
+            dashPane,
+            categoryPane,
+            productPane,
+            cashierPane
+        }, new JPanel[]{
+            dash,
+            category,
+            product,
+            cashier
+        });
+        SupplierForm supplierForm = new SupplierForm();
+        supplierForm.setName("Fournisseurs");
+        mainLbl.setText(supplierForm.getName());
+        switchPanels(supplierForm);
+    }//GEN-LAST:event_supplierPaneMouseReleased
+
+    private void cashierPaneMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cashierPaneMouseReleased
+        setColor(cashierPane);
+        cashier.setOpaque(true);
+        resetColor(new JPanel[] {
+            dashPane,
+            categoryPane,
+            productPane,
+            supplierPane
+        }, new JPanel[] {
+            dash,
+            category,
+            product,
+            supplier
+        });
+        CashierForm cashierForm = new CashierForm();
+        cashierForm.setName("Caisse");
+        mainLbl.setText(cashierForm.getName());
+        switchPanels(cashierForm);
+    }//GEN-LAST:event_cashierPaneMouseReleased
 
     /**
      * @param args the command line arguments
@@ -505,6 +815,8 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel cashier;
+    private javax.swing.JPanel cashierPane;
     private javax.swing.JLabel catLbl;
     private javax.swing.JPanel category;
     private javax.swing.JPanel categoryPane;
@@ -514,19 +826,50 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JPanel headerPane;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
     private javax.swing.JLabel mainLbl;
     private javax.swing.JLayeredPane mainPane;
     private javax.swing.JPanel product;
     private javax.swing.JLabel productLbl;
     private javax.swing.JPanel productPane;
+    private javax.swing.JLabel subCategoryLbl;
+    private javax.swing.JPanel supplier;
+    private javax.swing.JLabel supplierLbl;
+    private javax.swing.JPanel supplierPane;
     // End of variables declaration//GEN-END:variables
 
 }

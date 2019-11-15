@@ -5,7 +5,9 @@
         <group>
             <file>file:/D:/MyProjects/JAVA/CashRegister/src/dev/stekos/cashregister/views/MainForm.java</file>
             <file>file:/D:/MyProjects/JAVA/CashRegister/src/dev/stekos/cashregister/views/CategoryForm.java</file>
+            <file>file:/D:/MyProjects/JAVA/CashRegister/src/dev/stekos/cashregister/views/CashierForm.java</file>
             <file>file:/D:/MyProjects/JAVA/CashRegister/src/dev/stekos/cashregister/views/ProductForm.java</file>
+            <file>file:/D:/MyProjects/JAVA/CashRegister/src/dev/stekos/cashregister/views/SupplierForm.java</file>
         </group>
     </open-files>
 </project-private>

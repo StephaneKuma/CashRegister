@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -29,30 +31,24 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Invoice.findAll", query = "SELECT i FROM Invoice i"),
     @NamedQuery(name = "Invoice.findById", query = "SELECT i FROM Invoice i WHERE i.id = :id"),
     @NamedQuery(name = "Invoice.findByUserId", query = "SELECT i FROM Invoice i WHERE i.userId = :userId"),
-    @NamedQuery(name = "Invoice.findByTotal", query = "SELECT i FROM Invoice i WHERE i.total = :total"),
-    @NamedQuery(name = "Invoice.findByVat", query = "SELECT i FROM Invoice i WHERE i.vat = :vat"),
     @NamedQuery(name = "Invoice.findByDiscount", query = "SELECT i FROM Invoice i WHERE i.discount = :discount"),
     @NamedQuery(name = "Invoice.findByPayable", query = "SELECT i FROM Invoice i WHERE i.payable = :payable"),
     @NamedQuery(name = "Invoice.findByPaid", query = "SELECT i FROM Invoice i WHERE i.paid = :paid"),
     @NamedQuery(name = "Invoice.findByReturned", query = "SELECT i FROM Invoice i WHERE i.returned = :returned"),
+    @NamedQuery(name = "Invoice.findByRef", query = "SELECT i FROM Invoice i WHERE i.ref = :ref"),
     @NamedQuery(name = "Invoice.findByCreatedAt", query = "SELECT i FROM Invoice i WHERE i.createdAt = :createdAt"),
     @NamedQuery(name = "Invoice.findByUpdatedAt", query = "SELECT i FROM Invoice i WHERE i.updatedAt = :updatedAt")})
 public class Invoice implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private String id;
+    private Integer id;
     @Basic(optional = false)
     @Column(name = "user_id")
     private int userId;
-    @Basic(optional = false)
-    @Column(name = "total")
-    private double total;
-    @Basic(optional = false)
-    @Column(name = "vat")
-    private double vat;
     @Basic(optional = false)
     @Column(name = "discount")
     private double discount;
@@ -65,6 +61,8 @@ public class Invoice implements Serializable {
     @Basic(optional = false)
     @Column(name = "returned")
     private double returned;
+    @Column(name = "ref")
+    private String ref;
     @Basic(optional = false)
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
@@ -77,15 +75,13 @@ public class Invoice implements Serializable {
     public Invoice() {
     }
 
-    public Invoice(String id) {
+    public Invoice(Integer id) {
         this.id = id;
     }
 
-    public Invoice(String id, int userId, double total, double vat, double discount, double payable, double paid, double returned, Date createdAt, Date updatedAt) {
+    public Invoice(Integer id, int userId, double discount, double payable, double paid, double returned, Date createdAt, Date updatedAt) {
         this.id = id;
         this.userId = userId;
-        this.total = total;
-        this.vat = vat;
         this.discount = discount;
         this.payable = payable;
         this.paid = paid;
@@ -94,11 +90,11 @@ public class Invoice implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -108,22 +104,6 @@ public class Invoice implements Serializable {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
-
-    public double getVat() {
-        return vat;
-    }
-
-    public void setVat(double vat) {
-        this.vat = vat;
     }
 
     public double getDiscount() {
@@ -156,6 +136,14 @@ public class Invoice implements Serializable {
 
     public void setReturned(double returned) {
         this.returned = returned;
+    }
+
+    public String getRef() {
+        return ref;
+    }
+
+    public void setRef(String ref) {
+        this.ref = ref;
     }
 
     public Date getCreatedAt() {

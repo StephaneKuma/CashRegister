@@ -10,6 +10,11 @@ import dev.stekos.cashregister.controllers.exceptions.NonexistentEntityException
 import dev.stekos.cashregister.dao.SubCategoryDAO;
 import dev.stekos.cashregister.models.Category;
 import dev.stekos.cashregister.models.SubCategory;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.HeadlessException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -40,6 +45,11 @@ public class CategoryForm extends javax.swing.JPanel {
         editBtn.setEnabled(false);;
         cancelBtn.setEnabled(false);
         deleteBtn.setEnabled(false);
+        categoriesTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
+        categoriesTable.getTableHeader().setOpaque(false);
+        categoriesTable.getTableHeader().setBackground(new Color(32, 136, 203));
+        categoriesTable.getTableHeader().setForeground(new Color(255, 255, 255));
+        categoriesTable.setRowHeight(25);
         categoriesTable.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
             if(categoriesTable.getSelectedRow() != -1) {
                 try {
@@ -68,6 +78,11 @@ public class CategoryForm extends javax.swing.JPanel {
         subCatUpdateBtn.setEnabled(false);
         subCatCancelBtn.setEnabled(false);
         subCatDelBtn.setEnabled(false);
+        subCategoriesTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
+        subCategoriesTable.getTableHeader().setOpaque(false);
+        subCategoriesTable.getTableHeader().setBackground(new Color(32, 136, 203));
+        subCategoriesTable.getTableHeader().setForeground(new Color(255, 255, 255));
+        subCategoriesTable.setRowHeight(25);
         subCategoriesTable.getSelectionModel().addListSelectionListener(((e) -> {
             if(subCategoriesTable.getSelectedRow() != -1) {
                 try {
@@ -90,6 +105,18 @@ public class CategoryForm extends javax.swing.JPanel {
             }
         }));
         fillSubCategoriesTable();
+    }
+    
+    @Override
+    protected void paintComponent(Graphics graphics) {
+        Graphics2D graphics2D = (Graphics2D) graphics;
+        int width = getWidth();
+        int height = getHeight();
+        Color color1 = new Color(71, 120, 197);
+        Color color2 = new Color(23, 35, 51);
+        GradientPaint gradientPaint = new GradientPaint(0, 0, color1, 180, height, color2);
+        graphics2D.setPaint(gradientPaint);
+        graphics2D.fillRect(0, 0, width, height);
     }
 
     private void fillCategoriesTable() {
@@ -218,10 +245,9 @@ public class CategoryForm extends javax.swing.JPanel {
         subCatSearchTxt = new javax.swing.JTextField();
         subCatSearchBtn = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 204, 255));
         setPreferredSize(new java.awt.Dimension(1130, 562));
 
-        addNewCatPane.setBackground(new java.awt.Color(204, 204, 255));
+        addNewCatPane.setBackground(new java.awt.Color(204, 204, 204, 80));
         addNewCatPane.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Ajouter une nouvelle catégorie", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 14))); // NOI18N
 
         jLabel1.setText("Id");
@@ -294,7 +320,7 @@ public class CategoryForm extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        actionsPane.setBackground(new java.awt.Color(204, 204, 255));
+        actionsPane.setBackground(new java.awt.Color(204, 204, 204, 80));
         actionsPane.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Actions", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 14))); // NOI18N
 
         addBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dev/stekos/cashregister/icons/add.png"))); // NOI18N
@@ -375,7 +401,7 @@ public class CategoryForm extends javax.swing.JPanel {
                 .addGap(42, 42, 42))
         );
 
-        catListPane.setBackground(new java.awt.Color(204, 204, 255));
+        catListPane.setBackground(new java.awt.Color(204, 204, 204, 80));
         catListPane.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "List des catégories", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 14))); // NOI18N
 
         categoriesTable.setAutoCreateRowSorter(true);
@@ -391,6 +417,8 @@ public class CategoryForm extends javax.swing.JPanel {
 
             }
         ));
+        categoriesTable.setFocusable(false);
+        categoriesTable.setSelectionBackground(new java.awt.Color(232, 57, 95));
         jScrollPane1.setViewportView(categoriesTable);
 
         searchTxt.setToolTipText("Chercher une catégorie");
@@ -427,18 +455,20 @@ public class CategoryForm extends javax.swing.JPanel {
             catListPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, catListPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(catListPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchBtn))
+                .addGroup(catListPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(searchBtn)
+                    .addGroup(catListPaneLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(searchTxt)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jPanel3.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204, 80));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Sous Catégories", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 14))); // NOI18N
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204, 80));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Ajouter une sous cat.", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 14))); // NOI18N
 
         jLabel4.setText("Id");
@@ -530,7 +560,7 @@ public class CategoryForm extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204, 80));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Ajouter une sous cat.", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 14))); // NOI18N
 
         subCatAddBtn.setFont(new java.awt.Font("Segoe UI Semibold", 0, 11)); // NOI18N
@@ -605,7 +635,7 @@ public class CategoryForm extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204, 80));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Ajouter une sous cat.", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 14))); // NOI18N
 
         subCategoriesTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -619,6 +649,8 @@ public class CategoryForm extends javax.swing.JPanel {
 
             }
         ));
+        subCategoriesTable.setFocusable(false);
+        subCategoriesTable.setSelectionBackground(new java.awt.Color(232, 57, 95));
         jScrollPane2.setViewportView(subCategoriesTable);
 
         listSubcatBtn.setText("Afficher");
@@ -650,7 +682,7 @@ public class CategoryForm extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        jPanel5.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel5.setBackground(new java.awt.Color(204, 204, 204, 80));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Ajouter une sous cat.", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 14))); // NOI18N
 
         subCatSearchTxt.addActionListener(new java.awt.event.ActionListener() {
@@ -683,7 +715,7 @@ public class CategoryForm extends javax.swing.JPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(subCatSearchBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(subCatSearchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(subCatSearchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -771,6 +803,7 @@ public class CategoryForm extends javax.swing.JPanel {
                     category.setUpdatedAt(addDc.getDate());
                 }
                 categoryDAO.add(category);
+                JOptionPane.showMessageDialog(this, "Ajout réussi", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 fillCategoriesTable();
                 cancelBtnActionPerformed(evt);
             }
@@ -796,6 +829,7 @@ public class CategoryForm extends javax.swing.JPanel {
                 } else {
                     category.setUpdatedAt(addDc.getDate());
                     categoryDAO.edit(category);
+                    JOptionPane.showMessageDialog(this, "Mise à jour réussie", "Succès", JOptionPane.INFORMATION_MESSAGE);
                     fillCategoriesTable();
                     cancelBtnActionPerformed(evt);
                 }
@@ -825,6 +859,7 @@ public class CategoryForm extends javax.swing.JPanel {
         if(i == 0) {
             try {
                 categoryDAO.remove(Integer.parseInt(idTxt.getText()));
+                JOptionPane.showMessageDialog(this, "Suppression réussie", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 fillCategoriesTable();
                 cancelBtnActionPerformed(evt);
             } catch (NonexistentEntityException ex) {
@@ -894,6 +929,7 @@ public class CategoryForm extends javax.swing.JPanel {
                     subCategory.setUpdatedAt(date);
                 }
                 subCategoryDAO.add(subCategory);
+                JOptionPane.showMessageDialog(this, "Ajout réussi", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 subCatCancelBtnActionPerformed(evt);
                 fillSubCategoriesTable();
             }
@@ -939,6 +975,7 @@ public class CategoryForm extends javax.swing.JPanel {
                 if(subCatAddDc.getDate() != null) {
                     subCategory.setUpdatedAt(subCatAddDc.getDate());
                     subCategoryDAO.edit(subCategory);
+                    JOptionPane.showMessageDialog(this, "Mise à jour réussie", "Succès", JOptionPane.INFORMATION_MESSAGE);
                     fillSubCategoriesTable();
                     subCatCancelBtnActionPerformed(evt);
                 } else {
@@ -955,6 +992,7 @@ public class CategoryForm extends javax.swing.JPanel {
         if(i == 0) {
             try {
                 categoryDAO.remove(Integer.parseInt(idTxt.getText()));
+                JOptionPane.showMessageDialog(this, "Suppression réussie", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 fillCategoriesTable();
                 cancelBtnActionPerformed(evt);
             } catch (NonexistentEntityException ex) {

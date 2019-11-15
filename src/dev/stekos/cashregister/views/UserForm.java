@@ -56,10 +56,9 @@ public class UserForm extends javax.swing.JPanel {
         typeCb = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
 
-        setBackground(new java.awt.Color(204, 204, 255));
         setPreferredSize(new java.awt.Dimension(706, 526));
 
-        EmployeesPane.setBackground(new java.awt.Color(204, 204, 255));
+        EmployeesPane.setBackground(new java.awt.Color(204, 204, 204, 80));
         EmployeesPane.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Liste des utilisateurs", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
 
         productsTable2.setAutoCreateRowSorter(true);
@@ -93,7 +92,7 @@ public class UserForm extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        actionsPane.setBackground(new java.awt.Color(204, 204, 255));
+        actionsPane.setBackground(new java.awt.Color(204, 204, 204,80));
         actionsPane.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Actions", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 14))); // NOI18N
         actionsPane.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
 
@@ -174,7 +173,7 @@ public class UserForm extends javax.swing.JPanel {
                 .addGap(0, 11, Short.MAX_VALUE))
         );
 
-        addEmployeePane.setBackground(new java.awt.Color(204, 204, 255));
+        addEmployeePane.setBackground(new java.awt.Color(204, 204, 204, 80));
         addEmployeePane.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Ajouter un utilisateur", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 14))); // NOI18N
         addEmployeePane.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
 
@@ -301,7 +300,7 @@ public class UserForm extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204, 80));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Rechercher", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 14))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -312,7 +311,7 @@ public class UserForm extends javax.swing.JPanel {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
+            .addGap(0, 75, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

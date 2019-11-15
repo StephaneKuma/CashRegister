@@ -135,7 +135,7 @@ public class ProductJpaController implements Serializable {
         }
     }
 
-    public List<Product> findProductByCategoryId(int subCategoryId) {
+    public List<Product> findProductBySubCategoryId(int subCategoryId) {
         EntityManager em = getEntityManager();
         List<Product> products = null;
         try {
