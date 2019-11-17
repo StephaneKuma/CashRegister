@@ -102,7 +102,7 @@ public class ProductForm extends javax.swing.JPanel {
             Supplier supplier = (new SupplierDAO()).getById(products.get(i).getSupplierId());
             table[i][2] = supplier.getName();
             table[i][3] = products.get(i).getName();
-            table[i][4] = products.get(i).getPrice();
+            table[i][4] = products.get(i).getSellingPrice();
             table[i][5] = products.get(i).getQuantity();
             table[i][6] = products.get(i).getDescription();
             DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -702,7 +702,7 @@ public class ProductForm extends javax.swing.JPanel {
                 Product product = new Product();
                 product.setName(nameTxt.getText());
                 if(isDouble(priceTxt.getText())) {
-                    product.setPrice(Double.parseDouble(priceTxt.getText()));
+                    product.setSellingPrice(Double.parseDouble(priceTxt.getText()));
                 } else {
                     JOptionPane.showMessageDialog(this,
                             "Le champs Prix doit contenir un nombre réel",
@@ -765,7 +765,7 @@ public class ProductForm extends javax.swing.JPanel {
             }
             
             if(isDouble(priceTxt.getText())) {
-                product.setPrice(Double.parseDouble(priceTxt.getText()));
+                product.setSellingPrice(Double.parseDouble(priceTxt.getText()));
             } else {
                 JOptionPane.showMessageDialog(this,
                         "Le champs Prix doit contenir un nombre réel",
@@ -868,7 +868,7 @@ public class ProductForm extends javax.swing.JPanel {
         subCategoriesCb.setSelectedItem(subCategory.getLabel());
         suppliersCb.setSelectedItem(supplier.getName());
         nameTxt.setText(product.getName());
-        priceTxt.setText(Double.toString((product.getPrice())));
+        priceTxt.setText(Double.toString((product.getSellingPrice())));
         quantityTxt.setText(Double.toString((product.getQuantity())));
         descTxt.setText(product.getDescription());
         addDc.setDate(product.getUpdatedAt());

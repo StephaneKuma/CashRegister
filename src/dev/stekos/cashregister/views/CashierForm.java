@@ -35,7 +35,6 @@ import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -460,7 +459,7 @@ public class CashierForm extends javax.swing.JPanel {
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         String productName = productsCb.getSelectedItem().toString();
         Product product = productDAO.getByName(productName);
-        double price = product.getPrice();
+        double price = product.getSellingPrice();
         double quantity = (Integer) quantitySp.getValue();
         if (quantity > product.getQuantity()) {
             JOptionPane.showMessageDialog(this, "Quatité de " + product.getName() + " = " + product.getQuantity());
@@ -483,7 +482,7 @@ public class CashierForm extends javax.swing.JPanel {
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void productsCbFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_productsCbFocusLost
-        double price = productDAO.getByName(productsCb.getSelectedItem().toString()).getPrice();
+        double price = productDAO.getByName(productsCb.getSelectedItem().toString()).getSellingPrice();
         prodPriceTxt.setText(Double.toString(price));
     }//GEN-LAST:event_productsCbFocusLost
 

@@ -134,5 +134,19 @@ public class PurchaseJpaController implements Serializable {
             em.close();
         }
     }
+
+    public Purchase findPurchaseByProductId(int productId) {
+        EntityManager em = getEntityManager();
+        Purchase purchase = null;
+        try{
+            String queryString = "SELECT p FROM Purchase p WHERE p.productId = :productId";
+            Query query = em.createQuery(queryString);
+            query.setParameter("productId", productId);
+            purchase = (Purchase) query.getSingleResult();
+        } finally {
+            em.close();
+        }
+        return purchase;
+    }
     
 }

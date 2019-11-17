@@ -32,8 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Purchase.findById", query = "SELECT p FROM Purchase p WHERE p.id = :id"),
     @NamedQuery(name = "Purchase.findByUserId", query = "SELECT p FROM Purchase p WHERE p.userId = :userId"),
     @NamedQuery(name = "Purchase.findBySupplierId", query = "SELECT p FROM Purchase p WHERE p.supplierId = :supplierId"),
+    @NamedQuery(name = "Purchase.findByProductId", query = "SELECT p FROM Purchase p WHERE p.productId = :productId"),
     @NamedQuery(name = "Purchase.findByQuantity", query = "SELECT p FROM Purchase p WHERE p.quantity = :quantity"),
-    @NamedQuery(name = "Purchase.findByPrice", query = "SELECT p FROM Purchase p WHERE p.price = :price"),
+    @NamedQuery(name = "Purchase.findByBuyingPrice", query = "SELECT p FROM Purchase p WHERE p.buyingPrice = :buyingPrice"),
     @NamedQuery(name = "Purchase.findByCreatedAt", query = "SELECT p FROM Purchase p WHERE p.createdAt = :createdAt"),
     @NamedQuery(name = "Purchase.findByUpdatedAt", query = "SELECT p FROM Purchase p WHERE p.updatedAt = :updatedAt")})
 public class Purchase implements Serializable {
@@ -48,11 +49,14 @@ public class Purchase implements Serializable {
     private Integer userId;
     @Column(name = "supplier_id")
     private Integer supplierId;
+    @Basic(optional = false)
+    @Column(name = "product_id")
+    private int productId;
     @Column(name = "quantity")
     private Integer quantity;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "price")
-    private Double price;
+    @Column(name = "buying_price")
+    private Double buyingPrice;
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
@@ -65,6 +69,11 @@ public class Purchase implements Serializable {
 
     public Purchase(Integer id) {
         this.id = id;
+    }
+
+    public Purchase(Integer id, int productId) {
+        this.id = id;
+        this.productId = productId;
     }
 
     public Integer getId() {
@@ -91,6 +100,14 @@ public class Purchase implements Serializable {
         this.supplierId = supplierId;
     }
 
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
     public Integer getQuantity() {
         return quantity;
     }
@@ -99,12 +116,12 @@ public class Purchase implements Serializable {
         this.quantity = quantity;
     }
 
-    public Double getPrice() {
-        return price;
+    public Double getBuyingPrice() {
+        return buyingPrice;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setBuyingPrice(Double buyingPrice) {
+        this.buyingPrice = buyingPrice;
     }
 
     public Date getCreatedAt() {

@@ -84,6 +84,9 @@ public class MainForm extends javax.swing.JFrame {
         cashierPane = new javax.swing.JPanel();
         cashier = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
+        purchasePane = new javax.swing.JPanel();
+        purchase = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
         headerPane = new javax.swing.JPanel();
         mainLbl = new javax.swing.JLabel();
         mainPane = new javax.swing.JLayeredPane();
@@ -300,7 +303,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel1.add(productPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 160, -1));
+        jPanel1.add(productPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 160, -1));
 
         supplierPane.setBackground(new java.awt.Color(23, 35, 51));
         supplierPane.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -396,7 +399,55 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel1.add(cashierPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 160, -1));
+        jPanel1.add(cashierPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 160, -1));
+
+        purchasePane.setBackground(new java.awt.Color(23, 35, 51));
+        purchasePane.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                purchasePaneMouseReleased(evt);
+            }
+        });
+
+        purchase.setOpaque(false);
+        purchase.setPreferredSize(new java.awt.Dimension(3, 43));
+
+        javax.swing.GroupLayout purchaseLayout = new javax.swing.GroupLayout(purchase);
+        purchase.setLayout(purchaseLayout);
+        purchaseLayout.setHorizontalGroup(
+            purchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 3, Short.MAX_VALUE)
+        );
+        purchaseLayout.setVerticalGroup(
+            purchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 43, Short.MAX_VALUE)
+        );
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Achats");
+
+        javax.swing.GroupLayout purchasePaneLayout = new javax.swing.GroupLayout(purchasePane);
+        purchasePane.setLayout(purchasePaneLayout);
+        purchasePaneLayout.setHorizontalGroup(
+            purchasePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(purchasePaneLayout.createSequentialGroup()
+                .addComponent(purchase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel14)
+                .addGap(0, 86, Short.MAX_VALUE))
+        );
+        purchasePaneLayout.setVerticalGroup(
+            purchasePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(purchasePaneLayout.createSequentialGroup()
+                .addComponent(purchase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(purchasePaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel1.add(purchasePane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 160, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 620));
 
@@ -628,18 +679,23 @@ public class MainForm extends javax.swing.JFrame {
 
         jMenu1.setText("Fichier");
 
+        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem6.setText("Ajouter Catégorie");
         jMenu1.add(jMenuItem6);
         jMenu1.add(jSeparator1);
 
+        jMenuItem10.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem10.setText("Ajouter Fournisseur");
         jMenu1.add(jMenuItem10);
         jMenu1.add(jSeparator2);
 
+        jMenuItem11.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem11.setText("Ajouter Produit");
         jMenu1.add(jMenuItem11);
         jMenu1.add(jSeparator3);
 
+        jMenuItem12.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dev/stekos/cashregister/icons/close.png"))); // NOI18N
         jMenuItem12.setText("Quitter");
         jMenu1.add(jMenuItem12);
         jMenu1.add(jSeparator4);
@@ -648,14 +704,17 @@ public class MainForm extends javax.swing.JFrame {
 
         jMenu2.setText("Options");
 
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setText("Rapport Achats");
         jMenu2.add(jMenuItem1);
         jMenu2.add(jSeparator5);
 
+        jMenuItem13.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem13.setText("Rapport Categories");
         jMenu2.add(jMenuItem13);
         jMenu2.add(jSeparator6);
 
+        jMenuItem14.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem14.setText("Rapport Fournisseurs");
         jMenu2.add(jMenuItem14);
 
@@ -676,10 +735,12 @@ public class MainForm extends javax.swing.JFrame {
             productPane,
             supplierPane,
             categoryPane,
+            purchasePane
         }, new JPanel[]{
             product,
             supplier,
             category,
+            purchase
         });
         catLbl.setText(Integer.toString((new CategoryDAO()).getAll().size()));
         subCategoryLbl.setText(Integer.toString((new SubCategoryDAO()).getAll().size()));
@@ -696,12 +757,14 @@ public class MainForm extends javax.swing.JFrame {
             productPane,
             dashPane,
             supplierPane,
-            cashierPane
+            cashierPane,
+            purchasePane
         }, new JPanel[]{
             product,
             dash,
             supplier,
-            cashier
+            cashier,
+            purchase
         });
         CategoryForm categoryForm = new CategoryForm();
         categoryForm.setName("Catégories");
@@ -716,12 +779,14 @@ public class MainForm extends javax.swing.JFrame {
             dashPane,
             categoryPane,
             supplierPane,
-            cashierPane
+            cashierPane,
+            purchasePane
         }, new JPanel[]{
             dash,
             category,
             supplier,
-            cashier
+            cashier,
+            purchase
         });
         ProductForm productForm = new ProductForm();
         productForm.setName("Produits");
@@ -747,12 +812,14 @@ public class MainForm extends javax.swing.JFrame {
             dashPane,
             categoryPane,
             productPane,
-            cashierPane
+            cashierPane,
+            purchasePane
         }, new JPanel[]{
             dash,
             category,
             product,
-            cashier
+            cashier,
+            purchase
         });
         SupplierForm supplierForm = new SupplierForm();
         supplierForm.setName("Fournisseurs");
@@ -767,18 +834,42 @@ public class MainForm extends javax.swing.JFrame {
             dashPane,
             categoryPane,
             productPane,
-            supplierPane
+            supplierPane,
+            purchasePane,
         }, new JPanel[] {
             dash,
             category,
             product,
-            supplier
+            supplier,
+            purchase
         });
-        CashierForm cashierForm = new CashierForm();
-        cashierForm.setName("Caisse");
-        mainLbl.setText(cashierForm.getName());
-        switchPanels(cashierForm);
+        CashierForm purchaseForm = new CashierForm();
+        purchaseForm.setName("Caisse");
+        mainLbl.setText(purchaseForm.getName());
+        switchPanels(purchaseForm);
     }//GEN-LAST:event_cashierPaneMouseReleased
+
+    private void purchasePaneMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_purchasePaneMouseReleased
+        setColor(purchasePane);
+        purchase.setOpaque(true);
+        resetColor(new JPanel[] {
+            dashPane,
+            categoryPane,
+            productPane,
+            supplierPane,
+            cashierPane,
+        }, new JPanel[] {
+            dash,
+            category,
+            product,
+            supplier,
+            cashier
+        });
+        PurchaseForm purchaseForm = new PurchaseForm();
+        purchaseForm.setName("Achats");
+        mainLbl.setText(purchaseForm.getName());
+        switchPanels(purchaseForm);
+    }//GEN-LAST:event_purchasePaneMouseReleased
 
     /**
      * @param args the command line arguments
@@ -810,6 +901,7 @@ public class MainForm extends javax.swing.JFrame {
             ImageIcon imageIcon = new ImageIcon(MainForm.class.getResource("../icons/cashregister.PNG"));
             form.setIconImage(imageIcon.getImage());
             form.setResizable(false);
+            form.setLocationRelativeTo(null);
             form.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         });
     }
@@ -829,6 +921,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -866,6 +959,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JPanel product;
     private javax.swing.JLabel productLbl;
     private javax.swing.JPanel productPane;
+    private javax.swing.JPanel purchase;
+    private javax.swing.JPanel purchasePane;
     private javax.swing.JLabel subCategoryLbl;
     private javax.swing.JPanel supplier;
     private javax.swing.JLabel supplierLbl;

@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Product.findBySubCategoryId", query = "SELECT p FROM Product p WHERE p.subCategoryId = :subCategoryId"),
     @NamedQuery(name = "Product.findBySupplierId", query = "SELECT p FROM Product p WHERE p.supplierId = :supplierId"),
     @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name"),
-    @NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.price = :price"),
+    @NamedQuery(name = "Product.findBySellingPrice", query = "SELECT p FROM Product p WHERE p.sellingPrice = :sellingPrice"),
     @NamedQuery(name = "Product.findByQuantity", query = "SELECT p FROM Product p WHERE p.quantity = :quantity"),
     @NamedQuery(name = "Product.findByCreatedAt", query = "SELECT p FROM Product p WHERE p.createdAt = :createdAt"),
     @NamedQuery(name = "Product.findByUpdatedAt", query = "SELECT p FROM Product p WHERE p.updatedAt = :updatedAt")})
@@ -55,8 +55,8 @@ public class Product implements Serializable {
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @Column(name = "price")
-    private double price;
+    @Column(name = "selling_price")
+    private double sellingPrice;
     @Basic(optional = false)
     @Column(name = "quantity")
     private double quantity;
@@ -80,11 +80,11 @@ public class Product implements Serializable {
         this.id = id;
     }
 
-    public Product(Integer id, int supplierId, String name, double price, double quantity, String description, Date createdAt, Date updatedAt) {
+    public Product(Integer id, int supplierId, String name, double sellingPrice, double quantity, String description, Date createdAt, Date updatedAt) {
         this.id = id;
         this.supplierId = supplierId;
         this.name = name;
-        this.price = price;
+        this.sellingPrice = sellingPrice;
         this.quantity = quantity;
         this.description = description;
         this.createdAt = createdAt;
@@ -123,12 +123,12 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public double getPrice() {
-        return price;
+    public double getSellingPrice() {
+        return sellingPrice;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setSellingPrice(double sellingPrice) {
+        this.sellingPrice = sellingPrice;
     }
 
     public double getQuantity() {
