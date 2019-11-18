@@ -1,7 +1,8 @@
 # CashRegister
 Manage your stock and your fund easily and intuitively
 
-# Screenshoot
+# Screenshoots
+
 ![Dashboard](Dash.PNG)
 
 ![Categories](Cat.PNG)
