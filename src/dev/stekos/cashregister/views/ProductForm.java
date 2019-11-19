@@ -7,11 +7,15 @@ package dev.stekos.cashregister.views;
 
 import dev.stekos.cashregister.controllers.exceptions.NonexistentEntityException;
 import dev.stekos.cashregister.dao.ProductDAO;
+import dev.stekos.cashregister.dao.PurchaseDAO;
 import dev.stekos.cashregister.dao.SubCategoryDAO;
 import dev.stekos.cashregister.dao.SupplierDAO;
+import dev.stekos.cashregister.dao.UserDAO;
 import dev.stekos.cashregister.models.Product;
+import dev.stekos.cashregister.models.Purchase;
 import dev.stekos.cashregister.models.SubCategory;
 import dev.stekos.cashregister.models.Supplier;
+import dev.stekos.cashregister.models.User;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GradientPaint;
@@ -36,6 +40,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ProductForm extends javax.swing.JPanel {
     private final ProductDAO productDAO = new ProductDAO();
+    private final PurchaseDAO purchaseDAO = new PurchaseDAO();
 
     /**
      * Creates new form ProductPane
@@ -68,7 +73,7 @@ public class ProductForm extends javax.swing.JPanel {
                     subCategoriesCb.setSelectedItem((productsTable.getValueAt(selectedRow, 1).toString()));
                     suppliersCb.setSelectedItem(productsTable.getValueAt(selectedRow, 2).toString());
                     nameTxt.setText((productsTable.getValueAt(selectedRow, 3).toString()));
-                    priceTxt.setText((productsTable.getValueAt(selectedRow, 4).toString()));
+                    buyingPriceTxt.setText((productsTable.getValueAt(selectedRow, 4).toString()));
                     quantityTxt.setText((productsTable.getValueAt(selectedRow, 5).toString()));
                     descTxt.setText((productsTable.getValueAt(selectedRow, 6).toString()));
                     Date date = new SimpleDateFormat("dd-MM-yyyy").parse((productsTable.getValueAt(selectedRow, 7)).toString());
@@ -186,7 +191,7 @@ public class ProductForm extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         descTxt = new javax.swing.JTextField();
         quantityTxt = new javax.swing.JTextField();
-        priceTxt = new javax.swing.JTextField();
+        buyingPriceTxt = new javax.swing.JTextField();
         nameTxt = new javax.swing.JTextField();
         subCategoriesCb = new javax.swing.JComboBox<>();
         idTxt = new javax.swing.JTextField();
@@ -194,6 +199,8 @@ public class ProductForm extends javax.swing.JPanel {
         addDc = new com.toedter.calendar.JDateChooser();
         suppliersCb = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        sellingPriceTxt = new javax.swing.JTextField();
         actionsPane = new javax.swing.JPanel();
         addBtn = new javax.swing.JButton();
         editBtn = new javax.swing.JButton();
@@ -227,7 +234,7 @@ public class ProductForm extends javax.swing.JPanel {
 
         jLabel5.setText("Nom");
 
-        jLabel6.setText("Prix");
+        jLabel6.setText("Prix T. Achat");
 
         jLabel7.setText("Quantité");
 
@@ -245,9 +252,9 @@ public class ProductForm extends javax.swing.JPanel {
             }
         });
 
-        priceTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+        buyingPriceTxt.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                priceTxtFocusGained(evt);
+                buyingPriceTxtFocusGained(evt);
             }
         });
 
@@ -272,22 +279,30 @@ public class ProductForm extends javax.swing.JPanel {
 
         jLabel4.setText("Fournisseur");
 
+        jLabel9.setText("Prix Vente");
+
+        sellingPriceTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                sellingPriceTxtFocusGained(evt);
+            }
+        });
+
         javax.swing.GroupLayout addProdPaneLayout = new javax.swing.GroupLayout(addProdPane);
         addProdPane.setLayout(addProdPaneLayout);
         addProdPaneLayout.setHorizontalGroup(
             addProdPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(addProdPaneLayout.createSequentialGroup()
-                .addGroup(addProdPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(addProdPaneLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
+                .addGroup(addProdPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addProdPaneLayout.createSequentialGroup()
+                        .addGap(37, 37, 37)
                         .addGroup(addProdPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2))
-                        .addGap(77, 77, 77)
+                        .addGap(74, 74, 74)
                         .addGroup(addProdPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(subCategoriesCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(idTxt)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, addProdPaneLayout.createSequentialGroup()
+                    .addGroup(addProdPaneLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(addProdPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5)
@@ -295,12 +310,14 @@ public class ProductForm extends javax.swing.JPanel {
                             .addComponent(jLabel7)
                             .addComponent(jLabel8)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel4))
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel9))
                         .addGap(74, 74, 74)
                         .addGroup(addProdPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sellingPriceTxt)
                             .addComponent(descTxt, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(quantityTxt, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(priceTxt, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(buyingPriceTxt, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(nameTxt, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(suppliersCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(addDc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -327,12 +344,16 @@ public class ProductForm extends javax.swing.JPanel {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(addProdPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(priceTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(addProdPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(quantityTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(addProdPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buyingPriceTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(addProdPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sellingPriceTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(addProdPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(descTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -341,7 +362,7 @@ public class ProductForm extends javax.swing.JPanel {
                 .addGroup(addProdPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(addDc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
 
         actionsPane.setBackground(new java.awt.Color(204, 204, 204, 80));
@@ -417,16 +438,17 @@ public class ProductForm extends javax.swing.JPanel {
         actionsPaneLayout.setVerticalGroup(
             actionsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(actionsPaneLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(actionsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(actionsPaneLayout.createSequentialGroup()
-                        .addComponent(editBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(deleteBtn))
                     .addGroup(actionsPaneLayout.createSequentialGroup()
-                        .addComponent(addBtn)
+                        .addGroup(actionsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addBtn)
+                            .addComponent(editBtn))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cancelBtn)))
+                        .addComponent(cancelBtn)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18))
         );
 
@@ -494,7 +516,7 @@ public class ProductForm extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, catSearchPaneLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(catSearchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(subCatSearchBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(subCatSearchBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(subCatSearchCb))
                 .addContainerGap())
         );
@@ -534,7 +556,7 @@ public class ProductForm extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, supplierSearchPaneLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(supplierSearchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(supplierSearchBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(supplierSearchBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(supplierSearchCb))
                 .addContainerGap())
         );
@@ -568,7 +590,7 @@ public class ProductForm extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(nameSearchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nameSearchTxt)
-                    .addComponent(nameSearchBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
+                    .addComponent(nameSearchBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -600,8 +622,7 @@ public class ProductForm extends javax.swing.JPanel {
                     .addComponent(nameBtn)
                     .addComponent(supplierBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchLyP)
-                .addContainerGap())
+                .addComponent(searchLyP))
         );
 
         productsPane2.setBackground(new java.awt.Color(204, 204, 204, 80));
@@ -664,10 +685,10 @@ public class ProductForm extends javax.swing.JPanel {
                     .addComponent(productsPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(searchPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addProdPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(actionsPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(addProdPane, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(actionsPane, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -680,9 +701,9 @@ public class ProductForm extends javax.swing.JPanel {
         enableAddButton();
     }//GEN-LAST:event_quantityTxtFocusGained
 
-    private void priceTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_priceTxtFocusGained
+    private void buyingPriceTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_buyingPriceTxtFocusGained
         enableAddButton();
-    }//GEN-LAST:event_priceTxtFocusGained
+    }//GEN-LAST:event_buyingPriceTxtFocusGained
 
     private void nameTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nameTxtFocusGained
         enableAddButton();
@@ -694,15 +715,30 @@ public class ProductForm extends javax.swing.JPanel {
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         try {
-            if ("".equals(nameTxt.getText()) || "".equals(descTxt.getText())
-                || "".equals(priceTxt.getText()) || "".equals(quantityTxt.getText()) 
+            if ("".equals(nameTxt.getText()) || "".equals(descTxt.getText()) || "".equals(buyingPriceTxt.getText())
+                || "".equals(sellingPriceTxt.getText()) || "".equals(quantityTxt.getText()) 
                     || "".equals(subCategoriesCb.getSelectedItem()) || "".equals(suppliersCb.getSelectedItem())) {
                 JOptionPane.showMessageDialog(this, "Oups ! Un champs est toujours vide, Veuillez la remplir.");
             } else {
                 Product product = new Product();
                 product.setName(nameTxt.getText());
-                if(isDouble(priceTxt.getText())) {
-                    product.setSellingPrice(Double.parseDouble(priceTxt.getText()));
+                
+                Purchase purchase = new Purchase();
+                User user = new UserDAO().getById(1);
+                System.out.println(user);
+                purchase.setUserId(user.getId());
+                
+                if(isDouble(buyingPriceTxt.getText())) {
+                    purchase.setBuyingPrice(Double.parseDouble(buyingPriceTxt.getText()));
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                            "Le champs Prix de vente doit contenir un nombre réel",
+                            "Alerte", JOptionPane.WARNING_MESSAGE
+                    );
+                }
+                
+                if(isDouble(sellingPriceTxt.getText())) {
+                    product.setSellingPrice(Double.parseDouble(sellingPriceTxt.getText()));
                 } else {
                     JOptionPane.showMessageDialog(this,
                             "Le champs Prix doit contenir un nombre réel",
@@ -712,6 +748,7 @@ public class ProductForm extends javax.swing.JPanel {
                 
                 if(isDouble(quantityTxt.getText())) {
                     product.setQuantity(Double.parseDouble(quantityTxt.getText()));
+                    purchase.setQuantity(Integer.parseInt(quantityTxt.getText()));
                 } else {
                     JOptionPane.showMessageDialog(this,
                             "Le champs Quantité doit contenir un nombre réel",
@@ -723,18 +760,33 @@ public class ProductForm extends javax.swing.JPanel {
                 product.setSubCategoryId(subCategory.getId());
                 Supplier supplier = (new SupplierDAO()).getByName(suppliersCb.getSelectedItem().toString());
                 product.setSupplierId(supplier.getId());
+                purchase.setSupplierId(supplier.getId());
                 product.setDescription(descTxt.getText());
                 
                 if (addDc.getDate() == null) {
                     Date date = new Date();
                     product.setCreatedAt(date);
                     product.setUpdatedAt(date);
+                    purchase.setCreatedAt(date);
+                    purchase.setUpdatedAt(date);
                 } else {
                     product.setCreatedAt(addDc.getDate());
                     product.setUpdatedAt(addDc.getDate());
+                    purchase.setCreatedAt(addDc.getDate());
+                    purchase.setUpdatedAt(addDc.getDate());
                 }
                 
                 productDAO.add(product);
+                Product p = productDAO.getByName(nameTxt.getText());
+                purchase.setProductId(p.getId());
+                System.out.println(purchase.getUserId());
+                System.out.println(purchase.getSupplierId());
+                System.out.println(purchase.getProductId());
+                System.out.println(purchase.getQuantity());
+                System.out.println(purchase.getBuyingPrice());
+                System.out.println(purchase.getCreatedAt());
+                System.out.println(purchase.getUpdatedAt());
+                purchaseDAO.add(purchase);
                 fillProductsTable();
                 cancelBtnActionPerformed(evt);
             }
@@ -752,7 +804,7 @@ public class ProductForm extends javax.swing.JPanel {
             Product product = productDAO.getById(Integer.parseInt(idTxt.getText()));
             
             if ("".equals(nameTxt.getText()) || "".equals(descTxt.getText())
-                || "".equals(priceTxt.getText()) || "".equals(quantityTxt.getText()) 
+                || "".equals(buyingPriceTxt.getText()) || "".equals(quantityTxt.getText()) 
                     || "".equals(subCategoriesCb.getSelectedItem()) || "".equals(suppliersCb.getSelectedItem())) {
                 JOptionPane.showMessageDialog(this, "Oups ! Un champs est toujours vide, Veuillez la remplir.");
             } else {
@@ -764,8 +816,8 @@ public class ProductForm extends javax.swing.JPanel {
                 product.setSupplierId(supplier.getId());
             }
             
-            if(isDouble(priceTxt.getText())) {
-                product.setSellingPrice(Double.parseDouble(priceTxt.getText()));
+            if(isDouble(buyingPriceTxt.getText())) {
+                product.setSellingPrice(Double.parseDouble(buyingPriceTxt.getText()));
             } else {
                 JOptionPane.showMessageDialog(this,
                         "Le champs Prix doit contenir un nombre réel",
@@ -804,7 +856,7 @@ public class ProductForm extends javax.swing.JPanel {
         subCategoriesCb.setSelectedItem("");
         suppliersCb.setSelectedItem("");
         nameTxt.setText("");
-        priceTxt.setText("");
+        buyingPriceTxt.setText("");
         quantityTxt.setText("");
         descTxt.setText("");
         addDc.setCalendar(null);
@@ -868,7 +920,7 @@ public class ProductForm extends javax.swing.JPanel {
         subCategoriesCb.setSelectedItem(subCategory.getLabel());
         suppliersCb.setSelectedItem(supplier.getName());
         nameTxt.setText(product.getName());
-        priceTxt.setText(Double.toString((product.getSellingPrice())));
+        buyingPriceTxt.setText(Double.toString((product.getSellingPrice())));
         quantityTxt.setText(Double.toString((product.getQuantity())));
         descTxt.setText(product.getDescription());
         addDc.setDate(product.getUpdatedAt());
@@ -900,12 +952,17 @@ public class ProductForm extends javax.swing.JPanel {
         switchPanels(supplierSearchPane);
     }//GEN-LAST:event_supplierBtnActionPerformed
 
+    private void sellingPriceTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_sellingPriceTxtFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sellingPriceTxtFocusGained
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel actionsPane;
     private javax.swing.JButton addBtn;
     private com.toedter.calendar.JDateChooser addDc;
     private javax.swing.JPanel addProdPane;
+    private javax.swing.JTextField buyingPriceTxt;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JPanel catSearchPane;
     private javax.swing.JButton categorieBtn;
@@ -921,18 +978,19 @@ public class ProductForm extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton nameBtn;
     private javax.swing.JButton nameSearchBtn;
     private javax.swing.JPanel nameSearchPane;
     private javax.swing.JTextField nameSearchTxt;
     private javax.swing.JTextField nameTxt;
-    private javax.swing.JTextField priceTxt;
     private javax.swing.JPanel productsPane2;
     private javax.swing.JTable productsTable;
     private javax.swing.JTextField quantityTxt;
     private javax.swing.JLayeredPane searchLyP;
     private javax.swing.JPanel searchPane;
+    private javax.swing.JTextField sellingPriceTxt;
     private javax.swing.JButton subCatSearchBtn;
     private javax.swing.JComboBox<String> subCatSearchCb;
     private javax.swing.JComboBox<String> subCategoriesCb;
